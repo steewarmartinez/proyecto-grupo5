@@ -14,6 +14,9 @@ function InfoProducto(p) {
         </div>
         <p class="product-desc">${p.description}</p>
         <div class="product-price">${p.currency ?? "USD"} ${p.cost}</div>
+        <div class="btn">
+            <button (click)="addToCart(product)">Agregar a carrito</button>
+        </div>
       </div>
     </a>
   `;
@@ -76,3 +79,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     const applyBtn = document.getElementById("AplicarFiltro");
     applyBtn?.addEventListener("click", AplicarFiltro);
 });
+
+const usuario = localStorage.getItem("usuario");
+const loginLink = document.getElementById("login-link");
+if (usuario && loginLink) {
+  loginLink.textContent = usuario;
+  loginLink.href = "#";
+}
