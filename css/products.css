@@ -39,3 +39,165 @@
   border-radius: 3px;
   cursor: pointer;
 }
+
+/* Área de productos */
+.products {
+  flex: 1;
+}
+
+.products h2 {
+  color: #000000;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+}
+
+.product-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* Tarjetas de producto */
+.product-card {
+  background: white;
+  border: 2px solid #e9ecef;
+  border-radius: 10px;
+  padding: 15px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.product-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(212, 7, 7, 0.1);
+  text-decoration: none;
+  color: inherit;
+}
+
+.product-image-container {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.product-thumb {
+  width: 100%;
+  height: 180px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: #f8f9fa;
+  padding: 10px;
+}
+
+.product-info {
+  text-align: left;
+  margin-top: 15px;
+  margin-left: 15px;
+}
+
+.product-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #343a40;
+  margin-bottom: 8px;
+}
+
+.product-desc {
+  font-size: 0.9rem;
+  color: #6c757d;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.product-price {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #256e08;
+  margin-bottom: 8px;
+}
+
+.product-sold {
+  font-size: 0.9rem;
+  color: #e20505;
+  background: #f8f9fa;
+  padding: 4px 8px;
+  border-radius: 12px;
+  display: inline-block;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .productos-autos {
+    flex-direction: column;
+    padding: 15px;
+  }
+
+  .Filto {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .product-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .product-thumb {
+    height: 150px;
+  }
+}
+
+.btn {
+  display: flex;
+  justify-content: end;
+  width: 100%;
+  height: 40px;
+}
+
+button {
+  width: 160px;
+  height: 40px;
+  z-index: 0;
+  float: right;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  color: black;
+  font-weight: bold;
+  font-size: 12px;
+  padding: 6px 12px;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease-in-out;
+  font-family: "Montserrat", sans-serif;
+  border-radius: 4px;
+
+  box-shadow: 4px 4px 0px 0px white;
+  border: solid 1px black;
+
+  &:hover {
+    box-shadow: 6px 6px 0px 0px transparent;
+  }
+}
+
+button::after {
+  content: "→";
+  margin-left: 10px;
+  transition: margin-left 0.3s ease-in-out;
+}
+
+button:hover::after {
+  margin-left: 15px;
+}
+
+.stock-disponible {
+  color: green;
+  font-size: 14px;
+}
+
+.stock-agotado {
+  color: red;
+  font-size: 14px;
+}
