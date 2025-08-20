@@ -94,6 +94,7 @@
   text-align: left;
   margin-top: 15px;
   margin-left: 15px;
+
 }
 
 .product-title {
@@ -132,7 +133,7 @@
     flex-direction: column;
     padding: 15px;
   }
-
+  
   .Filto {
     width: 100%;
     margin-bottom: 20px;
@@ -141,6 +142,7 @@
   .product-cards {
     grid-template-columns: 1fr;
   }
+
 
   .product-thumb {
     height: 150px;
@@ -177,6 +179,7 @@ button {
   box-shadow: 4px 4px 0px 0px white;
   border: solid 1px black;
 
+
   &:hover {
     box-shadow: 6px 6px 0px 0px transparent;
   }
@@ -192,12 +195,3 @@ button:hover::after {
   margin-left: 15px;
 }
 
-.stock-disponible {
-  color: green;
-  font-size: 14px;
-}
-
-.stock-agotado {
-  color: red;
-  font-size: 14px;
-}
