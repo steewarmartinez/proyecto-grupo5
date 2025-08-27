@@ -1,6 +1,24 @@
 const signUpButton = document.getElementById("signUp");
 const signInButton = document.getElementById("signIn");
 const container = document.getElementById("container");
+document.addEventListener("DOMContentLoaded", () => {
+  const loginMobile = document.getElementById("loginMobile");
+  const registerMobile = document.getElementById("registerMobile");
+  const goRegister = document.getElementById("goRegister");
+  const goLogin = document.getElementById("goLogin");
+
+  if (goRegister && goLogin) {
+    goRegister.addEventListener("click", () => {
+      loginMobile.classList.remove("active");
+      registerMobile.classList.add("active");
+    });
+
+    goLogin.addEventListener("click", () => {
+      registerMobile.classList.remove("active");
+      loginMobile.classList.add("active");
+    });
+  }
+});
 
 signUpButton.addEventListener("click", () => {
   container.classList.add("right-panel-active");
