@@ -16,7 +16,7 @@ function InfoProducto(p) {
         <p class="product-desc">${p.description}</p>
         <div class="product-price">${p.currency ?? "USD"} ${p.cost}</div>
         <div class="btn">
-            <button>Agregar a carrito</button>
+            <button class="addToCart">Agregar a carrito</button> 
         </div>
       </div>
     </a>
