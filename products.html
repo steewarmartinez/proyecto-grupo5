@@ -56,44 +56,44 @@
     <!-- A aca no se toca -->
     <!-- Apartir de aca se muestra la barra de filtos -->
     <button
-    class="btn btn-dark d-lg-none mb-3"
-    type="button"
-    data-bs-toggle="collapse"
-    data-bs-target="#filtrosCollapse"
-    aria-expanded="false"
-    aria-controls="filtrosCollapse"
-  >
-    <i class="fa fa-filter"></i> Filtros
-  </button>
+      class="btn btn-dark d-lg-none mb-3"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#filtrosCollapse"
+      aria-expanded="false"
+      aria-controls="filtrosCollapse"
+    >
+      <i class="fa fa-filter"></i> Filtros
+    </button>
 
-  <!-- Menú de filtros en collapse -->
-  <div class="productos-autos">
-  <div class="collapse d-lg-block" id="filtrosCollapse">
-    <div class="Filto">
-      <h3>Filtros</h3>
-      <div>
-        <label
-          >Precio máximo:
-          <input type="number" id="maxPrice" value="50000" />
-        </label>
+    <!-- Menú de filtros en collapse -->
+    <div class="productos-autos">
+      <div class="collapse d-lg-block" id="filtrosCollapse">
+        <div class="Filto">
+          <h3>Filtros</h3>
+          <div>
+            <label
+              >Precio máximo:
+              <input type="number" id="maxPrice" value="50000" />
+            </label>
+          </div>
+          <div>
+            <label
+              >Mínimo vendidos:
+              <input type="number" id="minSold" value="0" />
+            </label>
+          </div>
+          <button id="AplicarFiltro">Aplicar</button>
+        </div>
       </div>
-      <div>
-        <label
-          >Mínimo vendidos:
-          <input type="number" id="minSold" value="0" />
-        </label>
-      </div>
-      <button id="AplicarFiltro">Aplicar</button>
-    </div>
-  </div>
 
       <!-- Este es el codigo para las tarjetas -->
       <div class="products">
         <h2>Autos</h2>
         <div class="product-cards" id="productsList"></div>
       </div>
- </div>
- 
+    </div>
+
     <footer class="text-muted">
       <!-- Esto tampoco se toca -->
       <div class="container">
