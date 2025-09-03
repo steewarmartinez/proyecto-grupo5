@@ -80,10 +80,3 @@ document.addEventListener("DOMContentLoaded", async () => {
   const applyBtn = document.getElementById("AplicarFiltro");
   applyBtn?.addEventListener("click", AplicarFiltro);
 });
-
-const usuario = localStorage.getItem("usuario");
-const loginLink = document.getElementById("login-link");
-if (usuario && loginLink) {
-  loginLink.textContent = usuario;
-  loginLink.href = "#";
-}

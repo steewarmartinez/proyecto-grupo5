@@ -9,13 +9,6 @@ let PESO_SYMBOL = "UYU ";
 let PERCENTAGE_SYMBOL = "%";
 let MSG = "FUNCIONALIDAD NO IMPLEMENTADA";
 
-const usuario = localStorage.getItem("usuario");
-const loginLink = document.getElementById("login-link");
-if (usuario && loginLink) {
-  loginLink.textContent = usuario;
-  loginLink.href = "#";
-}
-
 //Función que se utiliza para actualizar los costos de publicación
 function updateTotalCosts() {
   let unitProductCostHTML = document.getElementById("productCostText");
