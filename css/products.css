@@ -229,3 +229,27 @@
     height: 150px;
   }
 }
+/* Botones de los filtros */
+.Ordenadores {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  gap: 10px;
+}
+
+.Ordenadores h4 {
+  margin-bottom: 10px;
+  font-size: 1rem;
+  text-align: center; 
+}
+
+.Ordenadores .btn {
+   width: 80%;  
+  text-align: center;
+}
+.Ordenadores .btn {
+  display: block;        
+  width: 100%;           
+  text-align: center;    
+}

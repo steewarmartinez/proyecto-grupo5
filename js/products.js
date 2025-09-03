@@ -79,4 +79,25 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const applyBtn = document.getElementById("AplicarFiltro");
   applyBtn?.addEventListener("click", AplicarFiltro);
+ 
+  /*Aplica los filtros a los productos*/
+
+  /* Ordena del mas barato al mas caro */
+ document.getElementById("sortPriceAsc").addEventListener("click", () => {
+  STATE.view.sort((a, b) => a.cost - b.cost);
+  render(STATE.view);
+});
+ /* Ordena del mas caro al mas barato */
+document.getElementById("sortPriceDesc").addEventListener("click", () => {
+  STATE.view.sort((a, b) => b.cost - a.cost);
+  render(STATE.view);
+});
+/* Ordena del mas vendio al menos vendido */
+document.getElementById("sortBySold").addEventListener("click", () => {
+  STATE.view.sort((a, b) => b.soldCount - a.soldCount);
+  render(STATE.view);
+});
+
+
+  
 });
