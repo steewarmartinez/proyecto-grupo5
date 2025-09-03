@@ -170,3 +170,62 @@
 .addToCart:hover::after {
   margin-left: 15px;
 }
+
+.product-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+@media (min-width: 500px) and (max-width: 768px) {
+  .productos-autos {
+    flex-direction: column;
+    padding: 15px;
+  }
+
+  .Filto {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .product-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .product-thumb {
+    height: 150px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .productos-autos {
+    flex-direction: column;
+  }
+
+  .Filto {
+    width: 100%;
+  }
+
+  .product-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 499px) {
+  .product-cards {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .productos-autos {
+    flex-direction: column;
+    padding: 15px;
+  }
+
+  .Filto {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .product-thumb {
+    height: 150px;
+  }
+}
