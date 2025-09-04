@@ -82,3 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+function goToCart() {
+  window.location.href = "cart.html";
+}
