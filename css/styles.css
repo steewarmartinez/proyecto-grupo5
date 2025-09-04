@@ -346,6 +346,10 @@ nav.navbar a.nav-link:hover {
     color: #555;
   }
 
+  #toggle_open {
+    display: inline;
+  }
+
   .icon-btn {
     font-size: 1.4rem;
   }
@@ -396,6 +400,9 @@ nav.navbar a.nav-link:hover {
     cursor: pointer;
     margin-left: 0rem;
     color: #555;
+  }
+  #toggle_open {
+    display: inline;
   }
 
   .icon-btn {
@@ -448,6 +455,10 @@ nav.navbar a.nav-link:hover {
     cursor: pointer;
     margin-left: 0rem;
     color: #555;
+  }
+
+  #toggle_open {
+    display: inline;
   }
 
   .icon-btn {
