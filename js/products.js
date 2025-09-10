@@ -97,7 +97,13 @@ document.getElementById("sortBySold").addEventListener("click", () => {
   STATE.view.sort((a, b) => b.soldCount - a.soldCount);
   render(STATE.view);
 });
-
-
+/* Barra de filtros de precios */
+ document.getElementById('maxPrice').addEventListener('input', (e) => {
+    document.getElementById('maxPriceValue').textContent = `USD ${parseInt(e.target.value).toLocaleString()}`;
+  });
+  /* Barra de filtros de vendio */
+  document.getElementById('minSold').addEventListener('input', (e) => {
+    document.getElementById('minSoldValue').textContent = e.target.value;
+  });
   
 });
