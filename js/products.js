@@ -48,18 +48,38 @@ function AplicarFiltro() {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-  //  Para traer los productos del Json 101
-  const result = await getJSONData(PRODUCTS_URL);
+  // Obtener el ID de la categoría desde localStorage
+  let catID = localStorage.getItem("catID") || localStorage.getItem("selectedCategoryId");
+  if (!catID) catID = "101";
+
+  const base = "https://japceibal.github.io/emercado-api/cats_products/";
+  const url = `${base}${encodeURIComponent(catID)}.json`;
+
+  console.log("Cargando productos desde:", url);
+
+  let result;
+  try {
+    result = await getJSONData(url);
+  } catch (e) {
+    console.error("Falló la petición:", e);
+    const box = document.getElementById("productsList");
+    if (box) {
+      box.innerHTML = `<div class="no-results">No se pudieron cargar los productos.</div>`;
+    }
+    return;
+  }
+
   if (result.status !== "ok") {
     console.error("Error al cargar productos:", result.data);
-    document.getElementById(
-      "productsList"
-    ).innerHTML = `<div class="no-results">No se pudieron cargar los productos.</div>`;
+    const box = document.getElementById("productsList");
+    if (box) {
+      box.innerHTML = `<div class="no-results">No se pudieron cargar los productos.</div>`;
+    }
     return;
   }
 
   const { catName, products } = result.data;
-  STATE.catName = catName || "Autos";
+  STATE.catName = catName || "Categoría";
   STATE.raw = products.map((p) => ({
     id: p.id,
     name: p.name,
@@ -72,38 +92,34 @@ document.addEventListener("DOMContentLoaded", async () => {
   STATE.view = [...STATE.raw];
 
   const h2 = document.querySelector(".products h2, h2");
-  if (h2 && h2.textContent.trim().toLowerCase() === "autos")
-    h2.textContent = STATE.catName;
+  if (h2) h2.textContent = STATE.catName;
 
   render(STATE.view);
 
-  const applyBtn = document.getElementById("AplicarFiltro");
-  applyBtn?.addEventListener("click", AplicarFiltro);
- 
-  /*Aplica los filtros a los productos*/
+  document.getElementById("AplicarFiltro")?.addEventListener("click", AplicarFiltro);
 
-  /* Ordena del mas barato al mas caro */
- document.getElementById("sortPriceAsc").addEventListener("click", () => {
-  STATE.view.sort((a, b) => a.cost - b.cost);
-  render(STATE.view);
-});
- /* Ordena del mas caro al mas barato */
-document.getElementById("sortPriceDesc").addEventListener("click", () => {
-  STATE.view.sort((a, b) => b.cost - a.cost);
-  render(STATE.view);
-});
-/* Ordena del mas vendio al menos vendido */
-document.getElementById("sortBySold").addEventListener("click", () => {
-  STATE.view.sort((a, b) => b.soldCount - a.soldCount);
-  render(STATE.view);
-});
-/* Barra de filtros de precios */
- document.getElementById('maxPrice').addEventListener('input', (e) => {
-    document.getElementById('maxPriceValue').textContent = `USD ${parseInt(e.target.value).toLocaleString()}`;
+  document.getElementById("sortPriceAsc")?.addEventListener("click", () => {
+    STATE.view.sort((a, b) => a.cost - b.cost);
+    render(STATE.view);
   });
-  /* Barra de filtros de vendio */
-  document.getElementById('minSold').addEventListener('input', (e) => {
-    document.getElementById('minSoldValue').textContent = e.target.value;
+
+  document.getElementById("sortPriceDesc")?.addEventListener("click", () => {
+    STATE.view.sort((a, b) => b.cost - a.cost);
+    render(STATE.view);
   });
-  
+
+  document.getElementById("sortBySold")?.addEventListener("click", () => {
+    STATE.view.sort((a, b) => b.soldCount - a.soldCount);
+    render(STATE.view);
+  });
+
+  document.getElementById("maxPrice")?.addEventListener("input", (e) => {
+    const label = document.getElementById("maxPriceValue");
+    if (label) label.textContent = `USD ${parseInt(e.target.value).toLocaleString()}`;
+  });
+
+  document.getElementById("minSold")?.addEventListener("input", (e) => {
+    const label = document.getElementById("minSoldValue");
+    if (label) label.textContent = e.target.value;
+  });
 });
