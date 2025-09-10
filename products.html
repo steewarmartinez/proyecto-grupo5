@@ -67,28 +67,38 @@
         <div class="Filto">
           <h3>Filtros</h3>
           <div class="filter-group">
-            <label>Precio máximo: 
-              <span id="maxPriceValue">USD 50,000</span>
+            <label
+              >Precio máximo:
+              <br />
+              <span id="maxPriceVal"></span>
+              <input type="range" id="maxPrice" class="slider" />
+              <br />
             </label>
-            <input type="range" id="maxPrice" min="0" max="50000" step="1000" value="50000" class="slider">
-            <div class="slider-labels">
-            </div>
+            <label
+              >Precio mínimo:
+              <input type="range" id="minPrice" class="slider" />
+              <br />
+              <span id="minPriceVal"></span>
+            </label>
+            <div class="slider-labels"></div>
           </div>
 
-            <div class="filter-group">
-              <label>Mínimo vendidos: 
-              <span id="minSoldValue">0</span>
-              </label>
-              <input type="range" id="minSold" min="0" max="100" step="1" value="0" class="slider">
-                <div class="slider-labels">
-                </div>
-            </div>
+          <div class="filter-group">
+            <label>Mínimo vendidos: </label>
+            <input type="range" id="minSold" class="slider" />
+            <br />
+            <span id="minSoldVal"></span>
+            <div class="slider-labels"></div>
+          </div>
           <button id="AplicarFiltro">Aplicar</button>
           <!-- Ordenar -->
           <div class="Ordenadores">
             <button id="sortPriceAsc" class="btn btn-light">Precio ↑</button>
             <button id="sortPriceDesc" class="btn btn-light">Precio ↓</button>
             <button id="sortBySold" class="btn btn-light">Más vendidos</button>
+            <button id="deleteFilters" class="btn btn-light">
+              Borrar filtros
+            </button>
           </div>
         </div>
       </div>
