@@ -52,4 +52,6 @@ function mostrarProducto(product) {
   `;
 
   document.getElementById("product-container").innerHTML = html;
+
 }
+
