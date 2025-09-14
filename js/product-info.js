@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", async () => {
   // 1️⃣ Leer el ID del producto desde localStorage
   const productId = localStorage.getItem("selectedProductId");
@@ -53,3 +52,6 @@ function mostrarProducto(product) {
   `;
 
   document.getElementById("product-container").innerHTML = html;
+
+}
+
