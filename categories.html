@@ -15,39 +15,35 @@
     <link href="css/font-awesome.min.css" rel="stylesheet" />
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/styles.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-1">
-      <div class="container">
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
+    <nav class="custom-navbar">
+      <div class="header-container">
+        <button class="menu-toggle">
+          <i class="fa-solid fa-bars" id="toggle_open"></i>
+          <i class="fa-solid fa-xmark" id="toggle_close"></i>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav w-100 justify-content-between">
-            <li class="nav-item">
-              <a class="nav-link" href="index.html">Inicio</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="categories.html">Categorías</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="sell.html">Vender</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="login.html" id="login-link"
-                >Inicia sesion</a
-              >
-            </li>
-          </ul>
+
+        <div class="nav-center" id="menu">
+          <a href="index.html" class="nav-link active">Inicio</a>
+          <a href="categories.html" class="nav-link">Categorías</a>
+          <a href="sell.html" class="nav-link">Vender</a>
+          <a href="login.html" class="nav-link" id="login-link"
+            >Inicia sesión</a
+          >
+        </div>
+
+        <div class="nav-right">
+          <input type="text" class="search-input" placeholder="Buscar..." />
+          <button class="icon-btn" onclick="goToCart()">
+            <i class="fa-solid fa-cart-shopping"></i>
+          </button>
+          <button class="icon-btn"><i class="fa-solid fa-user"></i></button>
         </div>
       </div>
     </nav>

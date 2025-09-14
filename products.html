@@ -1,93 +1,141 @@
 <!DOCTYPE html>
 <html lang="es">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>eMercado - Todo lo que busques está aquí</title>
 
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>eMercado - Todo lo que busques está aquí</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i"
+      rel="stylesheet"
+    />
+    <link href="css/font-awesome.min.css" rel="stylesheet" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/products.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+  </head>
 
-  <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
-  <link href="css/font-awesome.min.css" rel="stylesheet">
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/styles.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/products.css">
-</head>
+  <body>
+    <nav class="custom-navbar">
+      <div class="header-container">
+        <button class="menu-toggle">
+          <i class="fa-solid fa-bars" id="toggle_open"></i>
+          <i class="fa-solid fa-xmark" id="toggle_close"></i>
+        </button>
 
-<body> 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-1"> <!-- De aca -->
-    <div class="container">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav w-100 justify-content-between">
-          <li class="nav-item">
-            <a class="nav-link" href="index.html">Inicio</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="categories.html">Categorías</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="sell.html">Vender</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="login.html">Inicio de sesion</a>
-          </li>
-        </ul>
+        <div class="nav-center" id="menu">
+          <a href="index.html" class="nav-link active">Inicio</a>
+          <a href="categories.html" class="nav-link">Categorías</a>
+          <a href="sell.html" class="nav-link">Vender</a>
+          <a href="login.html" class="nav-link" id="login-link"
+            >Inicia sesión</a
+          >
+        </div>
+
+        <div class="nav-right">
+          <input type="text" class="search-input" placeholder="Buscar..." />
+          <button class="icon-btn" onclick="goToCart()">
+            <i class="fa-solid fa-cart-shopping"></i>
+          </button>
+          <button class="icon-btn"><i class="fa-solid fa-user"></i></button>
+        </div>
+      </div>
+    </nav>
+    <!-- A aca no se toca -->
+    <!-- Apartir de aca se muestra la barra de filtos -->
+    <button
+      class="btn btn-dark d-lg-none mb-3"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#filtrosCollapse"
+      aria-expanded="false"
+      aria-controls="filtrosCollapse"
+    >
+      <i class="fa fa-filter"></i> Filtros
+    </button>
+
+    <!-- Menú de filtros en collapse -->
+    <div class="productos-autos">
+      <div class="collapse d-lg-block" id="filtrosCollapse">
+        <div class="Filto">
+          <h3>Filtros</h3>
+          <div class="filter-group">
+            <label
+              >Precio máximo:
+              <br />
+              <span id="maxPriceVal"></span>
+              <input type="range" id="maxPrice" class="slider" />
+              <br />
+            </label>
+            <label
+              >Precio mínimo:
+              <input type="range" id="minPrice" class="slider" />
+              <br />
+              <span id="minPriceVal"></span>
+            </label>
+            <div class="slider-labels"></div>
+          </div>
+
+          <div class="filter-group">
+            <label>Mínimo vendidos: </label>
+            <input type="range" id="minSold" class="slider" />
+            <br />
+            <span id="minSoldVal"></span>
+            <div class="slider-labels"></div>
+          </div>
+          <button id="AplicarFiltro">Aplicar</button>
+          <!-- Ordenar -->
+          <div class="Ordenadores">
+            <button id="sortPriceAsc" class="btn btn-light">Precio ↑</button>
+            <button id="sortPriceDesc" class="btn btn-light">Precio ↓</button>
+            <button id="sortBySold" class="btn btn-light">Más vendidos</button>
+            <button id="deleteFilters" class="btn btn-light">
+              Borrar filtros
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Este es el codigo para las tarjetas -->
+      <div class="products">
+        <h2>Autos</h2>
+        <div class="product-cards" id="productsList"></div>
       </div>
     </div>
-  </nav><!-- A aca no se toca -->
-<!-- Apartir de aca se muestra la barra de filtos -->
-  <main class="productos-autos">
-  <div class="Filto">
-    <h3>Filtros</h3>
-    <div>
-      <label>Precio máximo:
-        <input type="number" id="maxPrice" value="50000">
-      </label>
-    </div>
-<<<<<<< Updated upstream
-    <div>
-      <label>Mínimo vendidos:
-        <input type="number" id="minSold" value="0">
-      </label>
-    </div>
-    <button id="AplicarFiltro">Aplicar</button> /<!--Cambie el boton que tenia la funcion y puse el id para llamarlo desde products.js-->
-  </div>
 
-  <!-- Este es el codigo para las tarjetas -->
-  <div class="products">
-  <h2>Autos</h2>
-  <div class="product-cards" id="productsList"></div>
-</div>
-</main>
-  
-  <footer class="text-muted"> <!-- Esto tampoco se toca -->
-    <div class="container">
-      <p class="float-end">
-        <a href="#">Volver arriba</a>
-      </p>
-      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a></p>
+    <footer class="text-muted">
+      <!-- Esto tampoco se toca -->
+      <div class="container">
+        <p class="float-end">
+          <a href="#">Volver arriba</a>
+        </p>
+        <p>
+          Este sitio forma parte de
+          <a href="https://jovenesaprogramar.edu.uy/" target="_blank"
+            >Jovenes a Programar</a
+          >
+        </p>
+      </div>
+    </footer>
+    <!-- Esto tampoco se toca -->
+    <div id="spinner-wrapper">
+      <div class="lds-ring">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
     </div>
-  </footer><!-- Esto tampoco se toca -->
-  <div id="spinner-wrapper">
-    <div class="lds-ring">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
-  </div>
-  <script src="js/bootstrap.bundle.min.js"></script>
-  <script src="js/init.js"></script>
-  <script src="js/products.js"></script>
-</body>
-
-=======
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/init.js"></script>
     <script src="js/products.js"></script>
   </body>
->>>>>>> Stashed changes
 </html>
+

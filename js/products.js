@@ -1,21 +1,13 @@
 const STATE = { raw: [], view: [], catName: "" };
 
-// Genera la tarjeta HTML de cada producto
 function InfoProducto(p) {
-<<<<<<< Updated upstream
-    return `
-    <a href="product-info.html?pid=${encodeURIComponent(
-        p.id
-    )}" class="product-card">
-      <img src="${p.image}" alt="${p.name
-        }" class="product-thumb" loading="lazy">
-=======
   return `
-<a href="product-info.html" class="product-card">
+    <a href="product-info.html?pid=${encodeURIComponent(
+      p.id
+    )}" class="product-card" data-id="${p.id}">
       <img src="${p.image}" alt="${
     p.name
   }" class="product-thumb" loading="lazy">
->>>>>>> Stashed changes
       <div class="product-info">
         <div class="product-head">
           <h3 class="product-title">${p.name}</h3>
@@ -24,56 +16,43 @@ function InfoProducto(p) {
         <p class="product-desc">${p.description}</p>
         <div class="product-price">${p.currency ?? "USD"} ${p.cost}</div>
         <div class="btn">
-            <button (click)="addToCart(product)">Agregar a carrito</button>
+            <button class="addToCart">Agregar a carrito</button> 
         </div>
       </div>
     </a>
   `;
 }
 
-// Renderiza la lista de productos en el contenedor
 function render(list) {
-    const box = document.getElementById("productsList");
-    if (!box) return;
+  const box = document.getElementById("productsList");
+  if (!box) return;
 
-<<<<<<< Updated upstream
-    if (!list.length) {
-        box.innerHTML = `<div class="no-results">No se encontraron productos con esos filtros.</div>`;
-        return;
-    }
-    box.innerHTML = list.map(InfoProducto).join("");
-=======
   if (!list.length) {
     box.innerHTML = `<div class="no-results">No se encontraron productos con esos filtros.</div>`;
     return;
   }
-
-  // Genera el HTML de las tarjetas y lo inserta
   box.innerHTML = list.map(InfoProducto).join("");
 
-  // Llama a addProductListeners para asignar eventos a las tarjetas
+  // 🔹 Añadimos los listeners para guardar el ID en localStorage
   addProductListeners();
->>>>>>> Stashed changes
 }
 
-// Agrega el evento de click a cada tarjeta de producto
+// ✅ Nueva función: guardar ID al hacer clic
 function addProductListeners() {
   const links = document.querySelectorAll(".product-card");
-  links.forEach((link, index) => {
+  links.forEach((link) => {
     link.addEventListener("click", (e) => {
-      e.preventDefault(); // evita navegación inmediata
-      localStorage.setItem("selectedProductId", STATE.view[index].id); // guarda el ID seleccionado
-      window.location.href = link.href; // luego navega
+      e.preventDefault();
+      const productId = link.dataset.id;
+      localStorage.setItem("selectedProductId", productId);
+      window.location.href = link.href; // Redirige luego de guardar
     });
   });
 }
 
-// Aplica filtros básicos de precio máximo y cantidad mínima vendida
+// (El resto de tu código queda igual: filtros, ordenamiento, etc.)
+
 function AplicarFiltro() {
-<<<<<<< Updated upstream
-    const maxPrice = parseFloat(document.getElementById("maxPrice")?.value);
-    const minSold = parseInt(document.getElementById("minSold")?.value, 10);
-=======
   const maxPrice = parseFloat(document.getElementById("maxPrice")?.value);
   const minSold = parseInt(document.getElementById("minSold")?.value, 10);
 
@@ -86,7 +65,6 @@ function AplicarFiltro() {
   render(STATE.view);
 }
 
-// Resetea filtros y vuelve a mostrar todos los productos
 function BorrarFiltros() {
   const maxPriceInput = document.getElementById("maxPrice");
   const minSoldInput = document.getElementById("minSold");
@@ -96,13 +74,15 @@ function BorrarFiltros() {
   render(STATE.view);
 }
 
-// Listener principal cuando el DOM se carga
+// Luego agregas un listener al botón de borrar filtros
+
 document.addEventListener("DOMContentLoaded", async () => {
-  // Obtener ID de categoría y construir URL dinámica
+  // 1. Obtener el ID de la categoría desde localStorage
   let catID = localStorage.getItem("catID");
+  // 2. Construir la URL dinámica
   const PRODUCTS_URL = `https://japceibal.github.io/emercado-api/cats_products/${catID}.json`;
 
-  // Petición de productos
+  // 3. Hacer la petición
   const result = await getJSONData(PRODUCTS_URL);
   if (result.status !== "ok") {
     console.error("Error al cargar productos:", result.data);
@@ -112,7 +92,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  // Guardar información en STATE
+  // 4. Guardar en tu STATE
   const { catName, products } = result.data;
   STATE.catName = catName || "Categoría";
   STATE.raw = products.map((p) => ({
@@ -125,9 +105,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     image: p.image,
   }));
 
+  // (acá después seguís con tu lógica de renderizado)
+
   STATE.view = [...STATE.raw];
 
-  // Elementos del DOM para filtros y sliders
   const maxPriceInput = document.getElementById("maxPrice");
   const minPriceInput = document.getElementById("minPrice");
   const maxPriceSpan = document.getElementById("maxPriceVal");
@@ -135,7 +116,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   const minSoldInput = document.getElementById("minSold");
   const minSoldSpan = document.getElementById("minSoldVal");
 
-  // Calcular valores máximos y mínimos
   const prices = STATE.raw.map((p) => p.cost);
   const maxPrice = Math.max(...prices);
   const minPrice = Math.min(...prices);
@@ -143,7 +123,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const soldCounts = STATE.raw.map((p) => p.soldCount);
   const maxSold = Math.max(...soldCounts);
 
-  // Configurar sliders con valores iniciales
+  // Configurar sliders con valores reales
   if (maxPriceInput) {
     maxPriceInput.max = maxPrice;
     maxPriceInput.value = maxPrice;
@@ -176,81 +156,56 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   if (minSoldInput && minSoldSpan) {
-    minSoldSpan.textContent = minSoldInput.value;
+    minSoldSpan.textContent = minSoldInput.value; // mostrar valor inicial
+
+    // actualizar valor en tiempo real
     minSoldInput.addEventListener("input", () => {
       minSoldSpan.textContent = minSoldInput.value;
     });
   }
 
-  // Actualizar título de categoría
   const h2 = document.querySelector(".products h2, h2");
   if (h2 && h2.textContent.trim().toLowerCase() === "autos")
     h2.textContent = STATE.catName;
 
-  // Renderizar productos inicialmente
   render(STATE.view);
 
-  // Aplicar filtros al hacer click
   const applyBtn = document.getElementById("AplicarFiltro");
   applyBtn?.addEventListener("click", () => {
     const maxPriceVal = parseFloat(maxPriceInput?.value);
     const minPriceVal = parseFloat(minPriceInput?.value);
     const minSoldVal = parseInt(document.getElementById("minSold")?.value, 10);
->>>>>>> Stashed changes
 
     STATE.view = STATE.raw.filter((p) => {
-        const okPrice = isNaN(maxPrice) ? true : p.cost <= maxPrice;
-        const okSold = isNaN(minSold) ? true : p.soldCount >= minSold;
-        return okPrice && okSold;
+      const okMax = isNaN(maxPriceVal) ? true : p.cost <= maxPriceVal;
+      const okMin = isNaN(minPriceVal) ? true : p.cost >= minPriceVal;
+      const okSold = isNaN(minSoldVal) ? true : p.soldCount >= minSoldVal;
+      return okMax && okMin && okSold;
     });
 
     render(STATE.view);
-<<<<<<< Updated upstream
-}
-
-document.addEventListener("DOMContentLoaded", async () => {
-    //  Para traer los productos del Json 101
-    const result = await getJSONData(PRODUCTS_URL);
-    if (result.status !== "ok") {
-        console.error("Error al cargar productos:", result.data);
-        document.getElementById(
-            "productsList"
-        ).innerHTML = `<div class="no-results">No se pudieron cargar los productos.</div>`;
-        return;
-    }
-
-    const { catName, products } = result.data;
-    STATE.catName = catName || "Autos";
-    STATE.raw = products.map((p) => ({
-        id: p.id,
-        name: p.name,
-        description: p.description,
-        cost: p.cost,
-        currency: p.currency,
-        soldCount: p.soldCount,
-        image: p.image,
-    }));
-=======
   });
+  /*Aplica los filtros a los productos*/
 
-  // Ordenar por precio ascendente
+  /* Ordena del mas barato al mas caro */
   document.getElementById("sortPriceAsc").addEventListener("click", () => {
     STATE.view.sort((a, b) => a.cost - b.cost);
     render(STATE.view);
   });
-  // Ordenar por precio descendente
+  /* Ordena del mas caro al mas barato */
   document.getElementById("sortPriceDesc").addEventListener("click", () => {
     STATE.view.sort((a, b) => b.cost - a.cost);
     render(STATE.view);
   });
-  // Ordenar por vendidos
+  /* Ordena del mas vendio al menos vendido */
   document.getElementById("sortBySold").addEventListener("click", () => {
     STATE.view.sort((a, b) => b.soldCount - a.soldCount);
     render(STATE.view);
   });
 
-  // Borrar filtros y resetear
+  // Para borrar los filtros
   document.getElementById("deleteFilters")?.addEventListener("click", () => {
+    // Resetear inputs a valores calculados
     if (maxPriceInput) {
       maxPriceInput.value = maxPrice;
       maxPriceSpan.textContent = maxPrice;
@@ -265,27 +220,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     document.getElementById("minSold").value = 0;
->>>>>>> Stashed changes
+
     STATE.view = [...STATE.raw];
-
-    const h2 = document.querySelector(".products h2, h2");
-    if (h2 && h2.textContent.trim().toLowerCase() === "autos")
-        h2.textContent = STATE.catName;
-
     render(STATE.view);
-<<<<<<< Updated upstream
-
-    const applyBtn = document.getElementById("AplicarFiltro");
-    applyBtn?.addEventListener("click", AplicarFiltro);
-});
-
-const usuario = localStorage.getItem("usuario");
-const loginLink = document.getElementById("login-link");
-if (usuario && loginLink) {
-  loginLink.textContent = usuario;
-  loginLink.href = "#";
-}
-=======
   });
 });
->>>>>>> Stashed changes
+

@@ -3,14 +3,6 @@ document.addEventListener("DOMContentLoaded", function () {
     window.location.href = "login.html";
     return;
   }
-
-  const usuario = localStorage.getItem("usuario");
-  const loginLink = document.getElementById("login-link");
-  if (usuario && loginLink) {
-    loginLink.textContent = usuario;
-    loginLink.href = "#";
-  }
-
   //MANTENER EL RESTO DEL CODIGO ADENTRO DE ESTE BLOQUE, NO LO SAQUEN AFUERA!!
 
   document.addEventListener("DOMContentLoaded", function () {

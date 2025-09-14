@@ -1,10 +1,4 @@
-<<<<<<< Updated upstream
-const usuario = localStorage.getItem("usuario");
-const loginLink = document.getElementById("login-link");
-if (usuario && loginLink) {
-  loginLink.textContent = usuario;
-  loginLink.href = "#";
-=======
+
 document.addEventListener("DOMContentLoaded", async () => {
   // 1️⃣ Leer el ID del producto desde localStorage
   const productId = localStorage.getItem("selectedProductId");
@@ -59,5 +53,3 @@ function mostrarProducto(product) {
   `;
 
   document.getElementById("product-container").innerHTML = html;
->>>>>>> Stashed changes
-}
