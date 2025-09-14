@@ -4,7 +4,7 @@ function InfoProducto(p) {
   return `
     <a href="product-info.html?pid=${encodeURIComponent(
       p.id
-    )}" class="product-card">
+    )}" class="product-card" data-id="${p.id}">
       <img src="${p.image}" alt="${
     p.name
   }" class="product-thumb" loading="lazy">
@@ -32,7 +32,25 @@ function render(list) {
     return;
   }
   box.innerHTML = list.map(InfoProducto).join("");
+
+  // 🔹 Añadimos los listeners para guardar el ID en localStorage
+  addProductListeners();
 }
+
+// ✅ Nueva función: guardar ID al hacer clic
+function addProductListeners() {
+  const links = document.querySelectorAll(".product-card");
+  links.forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      const productId = link.dataset.id;
+      localStorage.setItem("selectedProductId", productId);
+      window.location.href = link.href; // Redirige luego de guardar
+    });
+  });
+}
+
+// (El resto de tu código queda igual: filtros, ordenamiento, etc.)
 
 function AplicarFiltro() {
   const maxPrice = parseFloat(document.getElementById("maxPrice")?.value);
