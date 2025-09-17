@@ -29,7 +29,7 @@ function mostrarProducto(product) {
   const imagenesHTML = product.images
     .map(
       (img) =>
-        `<div class="col-md-3 mb-2"><img src="${img}" class="img-fluid rounded" alt="${product.name}"></div>`
+        `<div class="col-md-3" style="margin-bottom:8px;"><img src="${img}" class="img-fluid rounded" alt="${product.name}"></div>`
     )
     .join("");
 
@@ -52,6 +52,4 @@ function mostrarProducto(product) {
   `;
 
   document.getElementById("product-container").innerHTML = html;
-
 }
-
