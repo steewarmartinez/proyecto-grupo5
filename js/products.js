@@ -224,5 +224,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     STATE.view = [...STATE.raw];
     render(STATE.view);
   });
+
+  function filtrarPorBusqueda() {
+    const query = document.getElementById("searchBar")?.value.toLowerCase() || "";
+    STATE.view = STATE.raw.filter(p =>
+      p.name.toLowerCase().includes(query) ||
+      p.description.toLowerCase().includes(query)
+    );
+    render(STATE.view);
+  }
+
+  // Listener para búsqueda en tiempo real
+  document.getElementById("searchBar")?.addEventListener("input", filtrarPorBusqueda);
 });
 
