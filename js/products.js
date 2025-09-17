@@ -225,8 +225,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     render(STATE.view);
   });
 
-  function filtrarPorBusqueda() {
-    const query = document.getElementById("searchBar")?.value.toLowerCase() || "";
+  function filtrarPorBusquedaGlobal() {
+    const query = document.querySelector(".search-input")?.value.toLowerCase() || "";
     STATE.view = STATE.raw.filter(p =>
       p.name.toLowerCase().includes(query) ||
       p.description.toLowerCase().includes(query)
@@ -234,7 +234,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     render(STATE.view);
   }
 
-  // Listener para búsqueda en tiempo real
-  document.getElementById("searchBar")?.addEventListener("input", filtrarPorBusqueda);
+  // Listener para búsqueda en tiempo real en la barra superior
+  document.querySelector(".search-input")?.addEventListener("input", filtrarPorBusquedaGlobal);
 });
 
