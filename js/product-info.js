@@ -37,6 +37,7 @@ function mostrarProducto(product) {
   // Miniaturas
   miniaturasDiv.innerHTML = product.images
     .map(
+
       (img, i) =>
         `<img src="${img}" class="miniatura" data-index="${i}" alt="${product.name}">`
     )
@@ -85,3 +86,4 @@ function mostrarProducto(product) {
 
   showSlide(index);
 }
+
