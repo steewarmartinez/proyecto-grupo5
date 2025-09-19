@@ -2,6 +2,19 @@ body {
   font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+body,
+html {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+header,
+.header-container {
+  position: relative;
+  z-index: 1100; /* asegúrate que esté arriba de todo */
+}
+
 .contenedor {
   display: flex;
   justify-content: center;
@@ -182,6 +195,9 @@ body {
 .product-sold {
   color: #e20505;
 }
+.nav-right {
+  padding: 0 30px;
+}
 
 @media (max-width: 499px) {
   .contenedor {
@@ -255,7 +271,7 @@ body {
   }
 }
 
-@media (min-width: 460px) and (max-width: 768px) {
+@media (min-width: 500px) and (max-width: 768px) {
   .contenedor {
     display: flex;
     flex-direction: column;
