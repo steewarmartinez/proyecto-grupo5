@@ -51,7 +51,33 @@ function mantenerLogin(formId) {
     }
   });
 }
+function cerrarSesion() {
+  localStorage.removeItem("logeado");
+  localStorage.removeItem("usuario");
 
+  if (loginLink) {
+    loginLink.textContent = "Inicia sesión";
+    loginLink.href = "#";
+  }
+  if (loginDropDown) {
+    loginDropDown.textContent = "Inicia sesión";
+    loginDropDown.href = "#";
+  }
+
+  Swal.fire({
+    toast: true, // Modo toast
+    position: "top-end", // Esquina superior derecha
+    icon: "success", // Icono de éxito
+    title: "Sesión cerrada", // Mensaje
+    showConfirmButton: false,
+    timer: 3000, // Duración 3 segundos
+    timerProgressBar: true,
+  });
+
+  setTimeout(() => {
+    window.location.reload();
+  }, 3000);
+}
 // Llamada para ambos formularios
 document.addEventListener("DOMContentLoaded", function () {
   mantenerLogin("formLogin"); // desktop

@@ -51,9 +51,58 @@ document.addEventListener("DOMContentLoaded", function () {
 
 const usuario = localStorage.getItem("usuario");
 const loginLink = document.getElementById("login-link");
+const loginDropDown = document.getElementById("login-dropdown");
 if (usuario && loginLink) {
   loginLink.textContent = usuario;
   loginLink.href = "#";
+}
+if (usuario && loginDropDown) {
+  loginDropDown.textContent = usuario;
+  loginDropDown.href = "#";
+}
+
+function cerrarSesion() {
+  // Obtener el usuario del localStorage
+  const usuario = localStorage.getItem("usuario");
+
+  if (usuario) {
+    // 1️⃣ Borrar datos de sesión
+    localStorage.removeItem("logeado");
+    localStorage.removeItem("usuario");
+
+    // 2️⃣ Actualizar la interfaz si existen los elementos
+    if (loginLink) {
+      loginLink.textContent = "Inicia sesión";
+      loginLink.href = "#";
+    }
+    if (loginDropDown) {
+      loginDropDown.textContent = "Inicia sesión";
+      loginDropDown.href = "#";
+    }
+
+    // 3️⃣ Mostrar alerta tipo toast
+    Swal.fire({
+      toast: true,
+      position: "top-end",
+      icon: "success",
+      title: "Sesión cerrada",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+    });
+
+    // 4️⃣ Recargar la página después de 3 segundos
+    setTimeout(() => {
+      window.location.reload();
+    }, 3000);
+  } else {
+    // No hay sesión iniciada
+    Swal.fire({
+      icon: "info",
+      title: "Inicia sesión primero",
+      showConfirmButton: true,
+    });
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {

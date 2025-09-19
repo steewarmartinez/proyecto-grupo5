@@ -9,6 +9,10 @@
   font-weight: bold;
 }
 
+body {
+  font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
 nav a {
   text-decoration: none;
 }
@@ -267,6 +271,27 @@ nav.navbar a.nav-link:hover {
 .icon-btn:hover {
   color: #757575;
   transition: 0.8s;
+}
+
+.dropdown-toggle {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.custom-dropdown {
+  background-color: #ffffff;
+  color: #000000;
+  border: solid 1px grey;
+}
+
+.custom-dropdown .dropdown-item:hover {
+  background-color: #e0e0e0;
+  color: #000000;
+}
+
+.usuario {
+  cursor: pointer;
 }
 
 #toggle_open {
