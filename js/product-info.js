@@ -1,3 +1,5 @@
+let comentariosActuales = []; // Guardamos los comentarios actuales
+
 document.addEventListener("DOMContentLoaded", async () => {
   const productId = localStorage.getItem("selectedProductId");
   if (!productId) return;
@@ -14,9 +16,36 @@ document.addEventListener("DOMContentLoaded", async () => {
     const product = await productRes.json();
     const comentarios = await commentsRes.json();
 
+    comentariosActuales = comentarios; // Guardamos los comentarios
     mostrarProducto(product);
-    mostrarCalificaciones(comentarios);
+    mostrarCalificaciones(comentariosActuales);
     mostrarRelacionados(product.relatedProducts);
+
+    // Listener para el formulario de calificación
+    const form = document.getElementById("form-calificacion");
+    if (form) {
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const comentario = document.getElementById("comentario").value.trim();
+        const puntaje = parseInt(document.getElementById("puntaje").value, 10);
+
+        if (!comentario || isNaN(puntaje) || puntaje < 1 || puntaje > 5) return;
+
+        // Simulamos usuario y fecha
+        const nuevoComentario = {
+          user: localStorage.getItem("usuario") || "Tú",
+          dateTime: new Date().toLocaleString(),
+          description: comentario,
+          score: puntaje,
+        };
+
+        comentariosActuales.push(nuevoComentario);
+        mostrarCalificaciones(comentariosActuales);
+
+        // Limpiar el formulario
+        form.reset();
+      });
+    }
   } catch (error) {
     console.error(error);
   }
