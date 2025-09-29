@@ -12,25 +12,24 @@ html {
 header,
 .header-container {
   position: relative;
-  z-index: 1100; /* asegúrate que esté arriba de todo */
+  z-index: 1100; 
 }
 
 .contenedor {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: row; 
+  align-items: flex-start;
   margin-top: 100px;
+  width: 100%;
+  gap: 2rem; 
 }
 
+
 .producto-container {
-  background-color: rgb(231, 231, 231);
-  display: flex;
-  gap: 40px;
-  border-radius: 12px;
   width: 60%;
-  height: 480px;
-  border: 1px solid black;
+  margin-bottom: 2rem;
 }
+
 
 .contenedorImagen {
   display: grid;
@@ -52,14 +51,14 @@ header,
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 .galeria {
-  margin-left: 50px;
-  margin-top: 50px;
-  position: relative;
-  width: 550px;
-  height: 320px;
+  margin-left: 0;
+  margin-top: 30px;
+  width: 100%;
+  max-width: 650px;
+  height: 380px;
   perspective: 1000px;
   overflow: hidden;
-  border-radius: 12px;
+  border-radius: 16px;
 }
 
 .galeria-imagenes {
@@ -76,7 +75,8 @@ header,
 .galeria-imagenes img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  border-radius: 12px;
 }
 
 .btn {
@@ -114,23 +114,24 @@ header,
 
 .muestra-imagenes {
   display: flex;
-  gap: 10px;
-  margin-top: 10px;
+  gap: 16px;
+  margin-top: 18px;
   justify-content: center;
 }
 
 .miniatura {
-  width: 80px;
-  height: 60px;
+  width: 110px;
+  height: 80px;
   object-fit: cover;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 8px;
   transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
 .miniatura:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transform: scale(1.08);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
 }
 
 .boton-agregarCarrito {
@@ -184,6 +185,13 @@ header,
   display: none;
 }
 
+.producto-container {
+  width: 60%;
+  margin-bottom: 2rem;
+  margin-left: 40px;      
+  padding-left: 20px;     
+}
+
 .product-desc {
   color: #585c5f;
 }
@@ -200,10 +208,11 @@ header,
 }
 
 .calificaciones-container {
+  width: 35%; 
   background: #f8f9fa;
   border-radius: 8px;
   padding: 1rem;
-  margin: 2rem 0;
+  margin: 0; 
 }
 .calificacion {
   border-bottom: 1px solid #ddd;
@@ -244,38 +253,62 @@ header,
   cursor: pointer;
 }
 .relacionados-container {
-  background: #f8f9fa;
-  border-radius: 8px;
-  padding: 1rem;
-  margin: 2rem 0;
+  width: 95%;
+  margin: 2.5rem auto 0 auto;
+  padding: 2rem 1rem;
+  background: #f4f8fc;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  text-align: center;
 }
+
+.relacionados-container h3 {
+  font-size: 1.6rem;
+  color: #256e08;
+  margin-bottom: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
 .relacionados-list {
   display: flex;
-  gap: 1rem;
+  gap: 2rem;
   flex-wrap: wrap;
+  justify-content: center;
 }
+
 .relacionado-card {
   background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 0.5rem;
-  width: 120px;
+  border: 1px solid #cce3d6;
+  border-radius: 12px;
+  padding: 1.2rem;
+  width: 180px;
   text-align: center;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-  transition: box-shadow 0.2s;
+  box-shadow: 0 4px 16px rgba(37,110,8,0.07);
+  transition: box-shadow 0.2s, transform 0.2s;
+  font-size: 1.1rem;
 }
+
 .relacionado-card:hover {
-  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  box-shadow: 0 8px 24px rgba(37,110,8,0.15);
+  transform: scale(1.04);
 }
+
 .relacionado-img {
-  width: 100px;
-  height: 80px;
+  width: 140px;
+  height: 110px;
   object-fit: contain;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.8rem;
+  border-radius: 8px;
+  background: #f8f9fa;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
+
 .relacionado-nombre {
-  font-size: 0.95rem;
-  color: #333;
+  font-size: 1.1rem;
+  color: #256e08;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
 }
 
 @media (max-width: 499px) {
@@ -586,6 +619,20 @@ header,
 
   .descripcion p {
     font-size: 0.9rem;
+  }
+}
+/* Responsive: en pantallas mas chicas */
+@media (max-width: 900px) {
+  .contenedor {
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+  .producto-container,
+  .calificaciones-container,
+  .relacionados-container {
+    width: 90%;
+    margin: 0 auto 2rem auto;
   }
 }
 
