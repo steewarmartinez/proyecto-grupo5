@@ -90,11 +90,37 @@
               <div class="galeria-imagenes" id="galeria-imagenes"></div>
               <button id="next" class="btn">&#10095;</button>
             </div>
-
             <div class="muestra-imagenes" id="muestra-imagenes"></div>
           </div>
           <div class="descripcion" id="descripcion"></div>
         </div>
+
+        <!-- Sección de calificaciones -->
+        <section class="calificaciones-container">
+          <h3>Calificaciones de usuarios</h3>
+          <div id="calificaciones-list"></div>
+          <!-- Formulario para nueva calificación -->
+          <form id="form-calificacion" class="form-calificacion">
+            <label for="comentario">Comentario:</label>
+            <textarea id="comentario" rows="3" required></textarea>
+            <label for="puntaje">Calificación:</label>
+            <select id="puntaje" required>
+              <option value="">Selecciona</option>
+              <option value="1">1 ⭐</option>
+              <option value="2">2 ⭐⭐</option>
+              <option value="3">3 ⭐⭐⭐</option>
+              <option value="4">4 ⭐⭐⭐⭐</option>
+              <option value="5">5 ⭐⭐⭐⭐⭐</option>
+            </select>
+            <button type="submit">Enviar</button>
+          </form>
+        </section>
+
+        <!-- Sección de productos relacionados -->
+        <section class="relacionados-container">
+          <h3>Productos relacionados</h3>
+          <div id="relacionados-list" class="relacionados-list"></div>
+        </section>
       </div>
     </main>
     <footer class="text-muted">

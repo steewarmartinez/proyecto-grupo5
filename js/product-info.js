@@ -1,29 +1,70 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  // 1️⃣ Leer el ID del producto desde localStorage
   const productId = localStorage.getItem("selectedProductId");
+  if (!productId) return;
 
-  if (!productId) {
-    document.getElementById("producto-container").innerHTML =
-      "<p>No se seleccionó producto.</p>";
-    return;
-  }
-
-  // 2️⃣ Construir la URL del API
+  // Info del producto
   const url = `https://japceibal.github.io/emercado-api/products/${productId}.json`;
+  const commentsUrl = `https://japceibal.github.io/emercado-api/products_comments/${productId}.json`;
 
   try {
-    const response = await fetch(url);
-    if (!response.ok) throw new Error("Error en la petición");
-    const product = await response.json();
+    const [productRes, commentsRes] = await Promise.all([
+      fetch(url),
+      fetch(commentsUrl),
+    ]);
+    const product = await productRes.json();
+    const comentarios = await commentsRes.json();
 
     mostrarProducto(product);
+    mostrarCalificaciones(comentarios);
+    mostrarRelacionados(product.relatedProducts);
   } catch (error) {
-    console.error("Error al cargar producto:", error);
-    document.getElementById("producto-container").innerHTML =
-      "<p>Error al cargar el producto.</p>";
+    console.error(error);
   }
 });
 
+// Mostrar comentarios
+function mostrarCalificaciones(comentarios) {
+  const cont = document.getElementById("calificaciones-list");
+  if (!cont) return;
+  cont.innerHTML = comentarios
+    .map(
+      (c) => `
+      <div class="calificacion">
+        <div class="calificacion-header">
+          <strong>${c.user}</strong> <span>${c.dateTime}</span>
+        </div>
+        <div class="calificacion-puntaje">${"⭐".repeat(c.score)}</div>
+        <div class="calificacion-comentario">${c.description}</div>
+      </div>
+    `
+    )
+    .join("");
+}
+
+// Mostrar productos relacionados
+function mostrarRelacionados(relacionados) {
+  const cont = document.getElementById("relacionados-list");
+  if (!cont) return;
+  cont.innerHTML = relacionados
+    .map(
+      (p) => `
+      <div class="relacionado-card" data-id="${p.id}" style="cursor:pointer">
+        <img src="${p.image}" alt="${p.name}" class="relacionado-img"/>
+        <div class="relacionado-nombre">${p.name}</div>
+      </div>
+    `
+    )
+    .join("");
+  // Listener para cambiar producto al hacer click
+  cont.querySelectorAll(".relacionado-card").forEach((card) => {
+    card.addEventListener("click", () => {
+      localStorage.setItem("selectedProductId", card.dataset.id);
+      location.reload();
+    });
+  });
+}
+
+// Mostrar producto
 function mostrarProducto(product) {
   const galeriaDiv = document.getElementById("galeria-imagenes");
   const descDiv = document.getElementById("descripcion");
