@@ -33,11 +33,11 @@ function render(list) {
   }
   box.innerHTML = list.map(InfoProducto).join("");
 
-  // 🔹 Añadimos los listeners para guardar el ID en localStorage
+  // Añadimos los listeners para guardar el ID en localStorage
   addProductListeners();
 }
 
-// ✅ Nueva función: guardar ID al hacer clic
+// Nueva función: guardar ID al hacer clic
 function addProductListeners() {
   const links = document.querySelectorAll(".product-card");
   links.forEach((link) => {
