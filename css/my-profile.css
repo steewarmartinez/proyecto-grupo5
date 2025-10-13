@@ -1,0 +1,130 @@
+.contenedor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.perfil-contenedor,
+.info-contenedor {
+  width: 30%;
+  background-color: rgb(219, 219, 219);
+  border-radius: 12px;
+  border: solid 1px black;
+}
+.perfil-contenedor {
+  margin-top: 8vh;
+  height: 240px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+}
+
+.info-contenedor {
+  height: 430px;
+  display: flex;
+  flex-direction: column;
+  padding: 0 8rem;
+}
+
+.perfil-contenedor:hover,
+.info-contenedor:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.perfil-contenedor img {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  margin-top: 1rem;
+}
+
+.perfil {
+  width: 50%;
+  height: 100%;
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  cursor: default;
+}
+
+.perfil h2 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.perfil h3 {
+  font-size: 1.5rem;
+  color: rgb(109, 108, 108);
+}
+
+.info-contenedor h3 {
+  font-size: 1.2rem;
+  margin: 1.3rem;
+  border-bottom: solid 1px black;
+  cursor: default;
+}
+
+.info-contenedor a {
+  text-decoration: none;
+  color: black;
+  cursor: default;
+}
+
+.imagen-perfil {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.opciones-imagen {
+  display: flex;
+  gap: 0.2rem;
+  margin-top: 0.5rem;
+}
+
+.btn-subir,
+.btn-borrar {
+  background-color: rgb(182, 181, 181);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+}
+
+.btn-subir:hover,
+.btn-borrar:hover {
+  background-color: #555;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.btn-editar {
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.btn-editar:hover {
+  background-color: #555;
+}
+
+.input-editar {
+  width: 80%;
+  padding: 0.3rem;
+  border: 1px solid #999;
+  border-radius: 6px;
+  font-size: 1rem;
+}

@@ -17,6 +17,7 @@
     />
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/my-profile.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -96,12 +97,43 @@
       </div>
     </nav>
     <main>
-      <div class="container">
-        <div class="alert alert-danger text-center" role="alert">
-          <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
+      <div class="contenedor">
+        <div class="perfil-contenedor">
+          <div class="imagen-perfil">
+            <img
+              id="foto-perfil"
+              src="assets/perfil.jpg"
+              alt="Foto de perfil"
+            />
+            <div
+              class="opciones-imagen"
+              id="opciones-imagen"
+              style="display: none"
+            >
+              <label for="input-imagen" class="btn-subir">Cambiar imagen</label>
+              <input type="file" id="input-imagen" accept="image/*" hidden />
+              <button id="btn-borrar" class="btn-borrar">Eliminar</button>
+            </div>
+          </div>
+
+          <div class="perfil">
+            <h2 id="nombre-usuario">Nombre</h2>
+            <h3 id="apellido-usuario">Apellido</h3>
+          </div>
+        </div>
+
+        <div class="info-contenedor">
+          <h3>Correo: <a id="correo-usuario"></a></h3>
+          <h3>Teléfono: <a id="telefono-usuario"></a></h3>
+          <h3>Género: <a id="genero-usuario"></a></h3>
+          <h3>País: <a id="pais-usuario"></a></h3>
+        </div>
+        <div class="control">
+          <button id="btnEditar" class="btn-editar">Editar perfil</button>
         </div>
       </div>
     </main>
+
     <footer class="text-muted">
       <div class="container">
         <p class="float-end">

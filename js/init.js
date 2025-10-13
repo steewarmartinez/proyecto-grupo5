@@ -52,6 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
 const usuario = localStorage.getItem("usuario");
 const loginLink = document.getElementById("login-link");
 const loginDropDown = document.getElementById("login-dropdown");
+const correoUsuario = document.getElementById("correo-usuario");
 if (usuario && loginLink) {
   loginLink.textContent = usuario;
   loginLink.href = "#";
@@ -59,6 +60,10 @@ if (usuario && loginLink) {
 if (usuario && loginDropDown) {
   loginDropDown.textContent = usuario;
   loginDropDown.href = "#";
+}
+if (usuario && correoUsuario) {
+  correoUsuario.textContent = usuario;
+  correoUsuario.href = "#";
 }
 
 function cerrarSesion() {
@@ -75,6 +80,10 @@ function cerrarSesion() {
     if (loginDropDown) {
       loginDropDown.textContent = "Inicia sesión";
       loginDropDown.href = "#";
+    }
+    if (correoUsuario) {
+      correoUsuario.textContent = "";
+      correoUsuario.href = "#";
     }
 
     Swal.fire({
