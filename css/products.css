@@ -1,3 +1,39 @@
+body.dark-mode {
+  background-color: #3b3b3b;
+  color: white;
+}
+
+body.dark-mode .filtros,
+body.dark-mode .product-card {
+  background: black;
+  color: white;
+  transition: 0.7s;
+}
+
+body.dark-mode .product-title {
+  color: white;
+}
+
+body.dark-mode .product-thumb,
+body.dark-mode .product-sold {
+  background: rgb(54, 54, 54);
+}
+
+body.dark-mode .product-desc {
+  color: white;
+}
+
+body.dark-mode .search-input {
+  background-color: black;
+  border: 1px solid #ccc;
+  outline: none;
+  color: white;
+}
+
+body.dark-mode .categorias-productos {
+  color: white;
+}
+
 .filtros-productos {
   display: flex;
   padding: 20px;
@@ -7,7 +43,7 @@
 .filtros {
   width: 100%;
   padding: 15px;
-  background: #f5f5f5;
+  background-color: #f5f5f5;
   border-radius: 5px;
 }
 

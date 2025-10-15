@@ -9,27 +9,39 @@ html {
   overflow-x: hidden;
 }
 
+body.dark-mode {
+  color: #e0e0e0;
+}
+
+body.dark-mode .calificaciones-container {
+  background: #555555;
+  color: #e0e0e0;
+}
+
+body.dark-mode .relacionados-container {
+  background: #555555;
+  color: #e0e0e0;
+}
+
 header,
 .header-container {
   position: relative;
-  z-index: 1100; 
+  z-index: 1100;
 }
 
 .contenedor {
   display: flex;
-  flex-direction: row; 
+  flex-direction: row;
   align-items: flex-start;
   margin-top: 100px;
   width: 100%;
-  gap: 2rem; 
+  gap: 2rem;
 }
-
 
 .producto-container {
   width: 60%;
   margin-bottom: 2rem;
 }
-
 
 .contenedorImagen {
   display: grid;
@@ -137,12 +149,12 @@ header,
   cursor: pointer;
   border-radius: 8px;
   transition: transform 0.3s, box-shadow 0.3s;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .miniatura:hover {
   transform: scale(1.08);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
 
 .boton-agregarCarrito {
@@ -199,8 +211,8 @@ header,
 .producto-container {
   width: 60%;
   margin-bottom: 2rem;
-  margin-left: 40px;      
-  padding-left: 20px;     
+  margin-left: 40px;
+  padding-left: 20px;
 }
 
 .product-desc {
@@ -219,11 +231,11 @@ header,
 }
 
 .calificaciones-container {
-  width: 35%; 
+  width: 35%;
   background: #f8f9fa;
   border-radius: 8px;
   padding: 1rem;
-  margin: 0; 
+  margin: 0;
 }
 .calificacion {
   border-bottom: 1px solid #ddd;
@@ -269,7 +281,7 @@ header,
   padding: 2rem 1rem;
   background: #f4f8fc;
   border-radius: 16px;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
   text-align: center;
 }
 
@@ -295,13 +307,13 @@ header,
   padding: 1.2rem;
   width: 180px;
   text-align: center;
-  box-shadow: 0 4px 16px rgba(37,110,8,0.07);
+  box-shadow: 0 4px 16px rgba(37, 110, 8, 0.07);
   transition: box-shadow 0.2s, transform 0.2s;
   font-size: 1.1rem;
 }
 
 .relacionado-card:hover {
-  box-shadow: 0 8px 24px rgba(37,110,8,0.15);
+  box-shadow: 0 8px 24px rgba(37, 110, 8, 0.15);
   transform: scale(1.04);
 }
 
@@ -312,7 +324,7 @@ header,
   margin-bottom: 0.8rem;
   border-radius: 8px;
   background: #f8f9fa;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .relacionado-nombre {

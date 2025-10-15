@@ -58,6 +58,12 @@
         </div>
 
         <div class="nav-right">
+          <div class="toggle-container">
+            <input type="checkbox" id="modeToggle" class="toggle-input" />
+            <label for="modeToggle" class="toggle-label">
+              <span class="toggle-knob">☀️</span>
+            </label>
+          </div>
           <input type="text" class="search-input" placeholder="Buscar..." />
           <button class="icon-btn" onclick="goToCart()">
             <i class="fa-solid fa-cart-shopping"></i>
@@ -117,16 +123,16 @@
           </div>
 
           <div class="perfil">
-            <h2 id="nombre-usuario">Nombre</h2>
-            <h3 id="apellido-usuario">Apellido</h3>
+            <h2 class="text" id="nombre-usuario">Nombre</h2>
+            <h3 class="text" id="apellido-usuario">Apellido</h3>
           </div>
         </div>
 
         <div class="info-contenedor">
-          <h3>Correo: <a id="correo-usuario"></a></h3>
-          <h3>Teléfono: <a id="telefono-usuario"></a></h3>
-          <h3>Género: <a id="genero-usuario"></a></h3>
-          <h3>País: <a id="pais-usuario"></a></h3>
+          <h3 class="text">Correo: <a class="text" id="correo-usuario"></a></h3>
+          <h3 class="text">Teléfono: <a id="telefono-usuario"></a></h3>
+          <h3 class="text">Género: <a id="genero-usuario"></a></h3>
+          <h3 class="text">País: <a id="pais-usuario"></a></h3>
         </div>
         <div class="control">
           <button id="btnEditar" class="btn-editar">Editar perfil</button>
