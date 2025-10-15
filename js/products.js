@@ -226,15 +226,18 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   function filtrarPorBusquedaGlobal() {
-    const query = document.querySelector(".search-input")?.value.toLowerCase() || "";
-    STATE.view = STATE.raw.filter(p =>
-      p.name.toLowerCase().includes(query) ||
-      p.description.toLowerCase().includes(query)
+    const query =
+      document.querySelector(".search-input")?.value.toLowerCase() || "";
+    STATE.view = STATE.raw.filter(
+      (p) =>
+        p.name.toLowerCase().includes(query) ||
+        p.description.toLowerCase().includes(query)
     );
     render(STATE.view);
   }
 
   // Listener para búsqueda en tiempo real en la barra superior
-  document.querySelector(".search-input")?.addEventListener("input", filtrarPorBusquedaGlobal);
+  document
+    .querySelector(".search-input")
+    ?.addEventListener("input", filtrarPorBusquedaGlobal);
 });
-

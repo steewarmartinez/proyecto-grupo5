@@ -44,6 +44,12 @@
         </div>
 
         <div class="nav-right">
+          <div class="toggle-container">
+            <input type="checkbox" id="modeToggle" class="toggle-input" />
+            <label for="modeToggle" class="toggle-label">
+              <span class="toggle-knob">☀️</span>
+            </label>
+          </div>
           <input type="text" class="search-input" placeholder="Buscar..." />
           <button class="icon-btn" onclick="goToCart()">
             <i class="fa-solid fa-cart-shopping"></i>
@@ -129,7 +135,7 @@
 
       <!-- Este es el codigo para las tarjetas -->
       <div class="products">
-        <h2>Autos</h2>
+        <h2 class="categorias-productos">Autos</h2>
         <div class="product-cards" id="productsList"></div>
       </div>
     </div>

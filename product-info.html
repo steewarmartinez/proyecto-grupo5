@@ -44,6 +44,12 @@
         </div>
 
         <div class="nav-right">
+          <div class="toggle-container">
+            <input type="checkbox" id="modeToggle" class="toggle-input" />
+            <label for="modeToggle" class="toggle-label">
+              <span class="toggle-knob">☀️</span>
+            </label>
+          </div>
           <button class="icon-btn" onclick="goToCart()">
             <i class="fa-solid fa-cart-shopping"></i>
           </button>
@@ -116,13 +122,12 @@
           </form>
         </section>
       </div>
-      
-       <!-- Sección de productos relacionados -->
-        <section class="relacionados-container">
-          <h3>Productos relacionados</h3>
-          <div id="relacionados-list" class="relacionados-list"></div>
-        </section>
-      
+
+      <!-- Sección de productos relacionados -->
+      <section class="relacionados-container">
+        <h3>Productos relacionados</h3>
+        <div id="relacionados-list" class="relacionados-list"></div>
+      </section>
     </main>
     <footer class="text-muted">
       <div class="container">

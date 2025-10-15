@@ -134,3 +134,25 @@ document.addEventListener("DOMContentLoaded", () => {
 function goToCart() {
   window.location.href = "cart.html";
 }
+
+const toggle = document.getElementById("modeToggle");
+const knob = document.querySelector(".toggle-knob");
+
+// Cargar tema guardado
+if (localStorage.getItem("theme") === "dark") {
+  document.body.classList.add("dark-mode");
+  toggle.checked = true;
+  knob.textContent = "🌙";
+}
+
+toggle.addEventListener("change", () => {
+  if (toggle.checked) {
+    document.body.classList.add("dark-mode");
+    knob.textContent = "🌙";
+    localStorage.setItem("theme", "dark");
+  } else {
+    document.body.classList.remove("dark-mode");
+    knob.textContent = "☀️";
+    localStorage.setItem("theme", "light");
+  }
+});
