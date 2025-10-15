@@ -566,9 +566,13 @@ body.dark-mode .nav-center {
   color: white;
 }
 
-body.dark-mode .nav-center .nav-link {
+body.dark-mode .nav-center {
   color: white;
   transition: 0.5s;
+}
+
+body.dark-mode .active {
+  color: black;
 }
 
 body.dark-mode .icon-btn {
