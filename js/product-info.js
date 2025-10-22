@@ -121,6 +121,7 @@ function mostrarProducto(product) {
     <p><strong>Vendidos:</strong> <span class="product-sold"> ${product.soldCount} </span></p>
     <div class="boton-agregarCarrito">
               <button class="agregarCarrito">Agregar a carrito</button>
+              <button class="comprarDirecto">Comprar</button>
             </div>
   `;
 
@@ -161,5 +162,13 @@ function mostrarProducto(product) {
       addToCart(product);
     });
     updateCartBadge();
+  }
+
+  const btnComprar = document.querySelector(".comprarDirecto");
+  if (btnComprar) {
+    btnComprar.addEventListener("click", () => {
+      addToCart(product);
+      window.location.href = "cart.html";
+    });
   }
 }
