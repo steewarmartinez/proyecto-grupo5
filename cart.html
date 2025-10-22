@@ -6,7 +6,8 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <title>eMercado - Todo lo que busques está aquí</title>
+    <title>eMercado - Carrito de Compras</title>
+
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
       rel="stylesheet"
@@ -15,8 +16,9 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"
     />
-    <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/font-awesome.min.css" rel="stylesheet" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/cart.css" />
     <link href="css/styles.css" rel="stylesheet" />
     <link
       rel="stylesheet"
@@ -33,7 +35,7 @@
         </button>
 
         <div class="nav-center" id="menu">
-          <a href="index.html" class="nav-link active">Inicio</a>
+          <a href="index.html" class="nav-link">Inicio</a>
           <a href="categories.html" class="nav-link">Categorías</a>
           <a href="sell.html" class="nav-link">Vender</a>
           <a href="login.html" class="nav-link" id="login-link"
@@ -48,10 +50,8 @@
               <span class="toggle-knob">☀️</span>
             </label>
           </div>
-          <input type="text" class="search-input" placeholder="Buscar..." />
-          <button class="icon-btn" onclick="goToCart()">
+          <button class="icon-btn active" onclick="goToCart()">
             <i class="fa-solid fa-cart-shopping"></i>
-            <span id="cart-badge" class="cart-badge">0</span>
           </button>
           <div class="dropdown">
             <button
@@ -87,13 +87,75 @@
         </div>
       </div>
     </nav>
+    
     <main>
       <div class="container">
-        <div class="alert alert-danger text-center" role="alert">
-          <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
+        <h1 class="titulo-carrito">
+         Mi Carrito
+        </h1>
+        
+        <!-- Lista de productos en el carrito -->
+        <div class="cart-container">
+          <div class="cart-cartas">
+            
+            <!-- Producto de prueba visual -->
+            <div class="cart-item">
+
+              <div class="item-info">
+                <div class="item-datalles">
+                  <h3>Productos 1</h3>
+                  <p class="nombre-tienda">Cliente</p>
+                  <div class="controles-cantidad">
+                    <button class="btn btn-sm btn-disminuir">-</button>
+                    <span class="cantidad">1</span>
+                    <button class="btn btn-sm btn-aumentar">+</button>
+                  </div>
+                </div>
+              </div>
+            
+              <div class="precio-item">
+                <span class="precio">$ 125.000</span>
+                <button class="btn btn-sm btn-eliminar">
+                 Eliminar
+                </button>
+              </div>
+            </div>
+
+          </div>
+          
+          <!-- Resumen del pedido ejemplo-->
+          <div class="resumen-pedido">
+            <div class="tarjeta-resumen">
+              <h3>Sub Total</h3>
+              <div class="detalles-resumen">
+                <div class="fila-resumen">
+                  <span>Subtotal:</span>
+                  <span>$ 125.000</span>
+                </div>
+                <div class="fila-resumen">
+                  <span>Envío:</span>
+                  <span>$ 15.000</span>
+                </div>
+                <div class="fila-resumen total">
+                  <span>Total:</span>
+                  <span>$ 140.00</span>
+                </div>
+              </div>
+              <button class="btn btn-primary btn-lg w-100 btn-pago">
+               Pagar
+              </button>
+              <div class="seguir-comprando">
+                <a href="categories.html" class="btn btn-outline-secondary w-100 btn-seguir-comprando">
+                   Seguir Comprando
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </main>
+    
+    
     <footer class="text-muted">
       <div class="container">
         <p class="float-end">
@@ -107,6 +169,7 @@
         </p>
       </div>
     </footer>
+    
     <div id="spinner-wrapper">
       <div class="lds-ring">
         <div></div>
@@ -115,6 +178,7 @@
         <div></div>
       </div>
     </div>
+    
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/init.js"></script>
     <script src="js/cart.js"></script>
