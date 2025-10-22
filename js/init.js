@@ -156,3 +156,17 @@ toggle.addEventListener("change", () => {
     localStorage.setItem("theme", "light");
   }
 });
+
+function updateCartBadge() {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+
+  const badge = document.getElementById("cart-badge");
+  if (badge) {
+    badge.textContent = totalItems;
+    badge.style.display = totalItems > 0 ? "flex" : "none";
+  }
+}
+
+// Llamar al cargar la página
+document.addEventListener("DOMContentLoaded", updateCartBadge);

@@ -2,9 +2,7 @@ const STATE = { raw: [], view: [], catName: "" };
 
 function InfoProducto(p) {
   return `
-    <a href="product-info.html?pid=${encodeURIComponent(
-      p.id
-    )}" class="product-card" data-id="${p.id}">
+    <div class="product-card" data-id="${p.id}">
       <img src="${p.image}" alt="${
     p.name
   }" class="product-thumb" loading="lazy">
@@ -16,11 +14,42 @@ function InfoProducto(p) {
         <p class="product-desc">${p.description}</p>
         <div class="product-price">${p.currency ?? "USD"} ${p.cost}</div>
         <div class="btn">
-            <button class="addToCart">Agregar a carrito</button> 
+          <button class="addToCart" data-id="${
+            p.id
+          }">Agregar a carrito</button> 
         </div>
       </div>
-    </a>
+    </div>
   `;
+}
+
+function addToCart(product) {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  // Verificar si el producto ya está en el carrito
+  const existeProducto = cart.find((item) => item.id === product.id);
+
+  if (existeProducto) {
+    // Si ya existe, podrías aumentar una cantidad o simplemente avisar
+    existeProducto.quantity += 1;
+  } else {
+    // Si no está, lo agregamos
+    cart.push({ ...product, quantity: 1 });
+  }
+
+  // Guardar nuevamente en localStorage
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  Swal.fire({
+    toast: true,
+    position: "top-end",
+    icon: "success",
+    title: `${product.name} agregado al carrito`,
+    showConfirmButton: false,
+    timer: 2000,
+    timerProgressBar: true,
+  });
+  updateCartBadge();
 }
 
 function render(list) {
@@ -31,9 +60,23 @@ function render(list) {
     box.innerHTML = `<div class="no-results">No se encontraron productos con esos filtros.</div>`;
     return;
   }
+
   box.innerHTML = list.map(InfoProducto).join("");
 
-  // Añadimos los listeners para guardar el ID en localStorage
+  // 🔹 Escuchar clicks en los botones de carrito
+  document.querySelectorAll(".addToCart").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation(); // Evita que dispare el click del .product-card
+      e.preventDefault();
+
+      const productId = e.target.dataset.id;
+      const product = STATE.raw.find((p) => p.id == productId);
+
+      if (product) addToCart(product);
+    });
+  });
+
+  // 🔹 Escuchar clicks en los productos para ver info
   addProductListeners();
 }
 
@@ -41,11 +84,11 @@ function render(list) {
 function addProductListeners() {
   const links = document.querySelectorAll(".product-card");
   links.forEach((link) => {
-    link.addEventListener("click", (e) => {
-      e.preventDefault();
+    link.addEventListener("click", () => {
       const productId = link.dataset.id;
       localStorage.setItem("selectedProductId", productId);
-      window.location.href = link.href; // Redirige luego de guardar
+      // Redirigir manualmente al detalle
+      window.location.href = "product-info.html";
     });
   });
 }
