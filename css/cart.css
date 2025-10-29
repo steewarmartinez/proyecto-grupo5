@@ -18,6 +18,10 @@
   border: 1px solid #e0e0e0;
 }
 
+.cart-thumb {
+  width: 40%;
+}
+
 body.dark-mode .cart-container {
   background-color: #222222;
   border: 1px solid #ffffff;

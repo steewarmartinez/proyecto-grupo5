@@ -87,67 +87,42 @@
         </div>
       </div>
     </nav>
-    
+
     <main>
       <div class="container">
-        <h1 class="titulo-carrito">
-         Mi Carrito
-        </h1>
-        
+        <h1 class="titulo-carrito">Mi Carrito</h1>
+
         <!-- Lista de productos en el carrito -->
         <div class="cart-container">
-          <div class="cart-cartas">
-            
-            <!-- Producto de prueba visual -->
-            <div class="cart-item">
+          <div class="cart-cartas"></div>
 
-              <div class="item-info">
-                <div class="item-datalles">
-                  <h3>Productos 1</h3>
-                  <p class="nombre-tienda">Cliente</p>
-                  <div class="controles-cantidad">
-                    <button class="btn btn-sm btn-disminuir">-</button>
-                    <span class="cantidad" data-qty="1">1</span>
-                    <button class="btn btn-sm btn-aumentar">+</button>
-                  </div>
-                </div>
-              </div>
-            
-              <div class="precio-item">
-                <!-- precio con data-price -->
-                <span class="precio" data-price="125000">$ 125.000</span>
-                <button class="btn btn-sm btn-eliminar">
-                 Eliminar
-                </button>
-              </div>
-            </div>
-
-          </div>
-          
           <!-- Resumen del pedido -->
           <div class="resumen-pedido">
-            <div class="tarjeta-resumen" data-shipping="15000">
+            <div class="tarjeta-resumen" data-shipping="100">
               <h3>Sub Total</h3>
               <div class="detalles-resumen">
                 <div class="fila-resumen">
                   <span>Subtotal:</span>
-                  <span id="subtotalValue">$ 125.000</span>
+                  <span id="subtotalValue">$ 0</span>
                 </div>
                 <div class="fila-resumen">
                   <span>Envío:</span>
-                  <span id="shippingValue">$ 15.000</span>
+                  <span id="shippingValue">$ 0</span>
                 </div>
                 <div class="fila-resumen total">
                   <span>Total:</span>
-                  <span id="totalValue">$ 140.000</span>
+                  <span id="totalValue">$ 0</span>
                 </div>
               </div>
               <button class="btn btn-primary btn-lg w-100 btn-pago">
-               Pagar
+                Pagar
               </button>
               <div class="seguir-comprando">
-                <a href="categories.html" class="btn btn-outline-secondary w-100 btn-seguir-comprando">
-                   Seguir Comprando
+                <a
+                  href="categories.html"
+                  class="btn btn-outline-secondary w-100 btn-seguir-comprando"
+                >
+                  Seguir Comprando
                 </a>
               </div>
             </div>
@@ -155,8 +130,7 @@
         </div>
       </div>
     </main>
-    
-    
+
     <footer class="text-muted">
       <div class="container">
         <p class="float-end">
@@ -170,7 +144,7 @@
         </p>
       </div>
     </footer>
-    
+
     <div id="spinner-wrapper">
       <div class="lds-ring">
         <div></div>
@@ -179,7 +153,7 @@
         <div></div>
       </div>
     </div>
-    
+
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/init.js"></script>
     <script src="js/cart.js"></script>
