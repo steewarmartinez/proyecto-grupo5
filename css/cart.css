@@ -201,12 +201,12 @@ body.dark-mode .precio {
     width: 80px;
   }
 
-  .precio-item {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    gap: 0.5rem;
+  .tarjeta-resumen {
+    position: static;
+    width: 100%;
+  }
+  .cart-thumb {
+    width: 100%;
   }
 }
 
@@ -225,6 +225,10 @@ body.dark-mode .precio {
   }
 
   .btn-eliminar {
+    width: 100%;
+  }
+
+  .cart-thumb {
     width: 100%;
   }
 }

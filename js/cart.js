@@ -74,6 +74,7 @@ function mostrarProductosDelLocalStorage() {
       (p) => `
       <div class="cart-item" data-id="${p.id}">
         <img src="${p.image || 'img/no-image.png'}" alt="${p.name}" class="cart-thumb">
+
         <div class="item-info">
           <div class="item-datalles">
             <h3>${p.name}</h3>
@@ -81,14 +82,18 @@ function mostrarProductosDelLocalStorage() {
             
             <div class="controles-cantidad">
               <button class="btn btn-sm btn-disminuir">-</button>
-              <span class="cantidad" data-qty="${p.quantity}">${p.quantity}</span>
+              <span class="cantidad" data-qty="${p.quantity}">${
+        p.quantity
+      }</span>
               <button class="btn btn-sm btn-aumentar">+</button>
             </div>
           </div>
         </div>
 
         <div class="precio-item">
-                <span class="precio" data-price="${p.cost}">${p.currency} ${p.cost}</span>
+                <span class="precio" data-price="${p.cost}">${p.currency} ${
+        p.cost
+      }</span>
                 <button class="btn btn-sm btn-eliminar">Eliminar</button>
               </div>
       </div>`
