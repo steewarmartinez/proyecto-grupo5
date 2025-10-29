@@ -21,9 +21,14 @@ function actualizarResumen() {
     const priceEl = item.querySelector(".precio");
     const qtyEl = item.querySelector(".cantidad");
     const price = priceEl
-      ? parseInt(priceEl.dataset.price || parsePriceText(priceEl.textContent), 10)
+      ? parseInt(
+          priceEl.dataset.price || parsePriceText(priceEl.textContent),
+          10
+        )
       : 0;
-    const qty = qtyEl ? parseInt(qtyEl.dataset.qty || qtyEl.textContent, 10) : 1;
+    const qty = qtyEl
+      ? parseInt(qtyEl.dataset.qty || qtyEl.textContent, 10)
+      : 1;
     subtotal += price * (isNaN(qty) ? 1 : qty);
   });
 
@@ -57,14 +62,21 @@ function mostrarProductosDelLocalStorage() {
       <div class="cart-item" data-id="${p.id}">
         <img src="${p.image}" alt="${p.name}" class="cart-thumb">
         <div class="item-info">
-          <h3>${p.name}</h3>
-          <p class="precio" data-price="${p.cost}">${p.currency} ${p.cost}</p>
-          <div class="controles-cantidad">
-            <button class="btn btn-sm btn-disminuir">-</button>
-            <span class="cantidad" data-qty="${p.quantity}">${p.quantity}</span>
-            <button class="btn btn-sm btn-aumentar">+</button>
+          <div class="item-datalles">
+            <h3>${p.name}</h3>
+            <p class="nombre-tienda">Cliente</p>
+            
+            <div class="controles-cantidad">
+              <button class="btn btn-sm btn-disminuir">-</button>
+              <span class="cantidad" data-qty="${p.quantity}">${p.quantity}</span>
+              <button class="btn btn-sm btn-aumentar">+</button>
+            </div>
           </div>
         </div>
+        <div class="precio-item">
+                <span class="precio" data-price="${p.cost}">${p.currency} ${p.cost}</span>
+                <button class="btn btn-sm btn-eliminar">Eliminar</button>
+              </div>
       </div>`
     )
     .join("");
@@ -80,7 +92,8 @@ function initQuantityControls() {
     const qtyEl = item.querySelector(".cantidad");
     // Aseguramos dataset inicial si falta
 
-    if (qtyEl && !qtyEl.dataset.qty) qtyEl.dataset.qty = parseInt(qtyEl.textContent, 10) || 1;
+    if (qtyEl && !qtyEl.dataset.qty)
+      qtyEl.dataset.qty = parseInt(qtyEl.textContent, 10) || 1;
 
     if (btnA) {
       btnA.addEventListener("click", () => {
@@ -110,5 +123,4 @@ function initQuantityControls() {
 
 document.addEventListener("DOMContentLoaded", () => {
   mostrarProductosDelLocalStorage(); // Se ejecuta al cargar la página
-  initQuantityControls();
 });
