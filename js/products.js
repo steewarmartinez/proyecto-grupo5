@@ -63,7 +63,7 @@ function render(list) {
 
   box.innerHTML = list.map(InfoProducto).join("");
 
-  // 🔹 Escuchar clicks en los botones de carrito
+  // Escuchar clicks en los botones de carrito
   document.querySelectorAll(".addToCart").forEach((btn) => {
     btn.addEventListener("click", (e) => {
       e.stopPropagation(); // Evita que dispare el click del .product-card
@@ -76,7 +76,7 @@ function render(list) {
     });
   });
 
-  // 🔹 Escuchar clicks en los productos para ver info
+  // Escuchar clicks en los productos para ver info
   addProductListeners();
 }
 
