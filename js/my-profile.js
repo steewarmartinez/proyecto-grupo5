@@ -16,37 +16,49 @@ let editando = false;
 
 // Cargar datos guardados al iniciar
 window.addEventListener("DOMContentLoaded", () => {
-  const imagenGuardada = localStorage.getItem("fotoPerfil");
-  if (imagenGuardada) fotoPerfil.src = imagenGuardada;
+  const datosGuardados = JSON.parse(localStorage.getItem("perfilUsuario"));
 
-  campos.forEach((id) => {
-    const valor = localStorage.getItem(id);
+  if (datosGuardados) {
+    if (datosGuardados.fotoPerfil) {
+      fotoPerfil.src = datosGuardados.fotoPerfil;
+    }
 
-    // Valor por defecto si no hay nada guardado
-    let valorPorDefecto = "";
-    if (id === "nombre-usuario") valorPorDefecto = "Nombre";
-    if (id === "apellido-usuario") valorPorDefecto = "Apellido";
+    campos.forEach((id) => {
+      const valor = datosGuardados[id] || "";
+      let valorPorDefecto = "";
 
-    document.getElementById(id).textContent = valor || valorPorDefecto;
-  });
+      if (id === "nombre-usuario") valorPorDefecto = "Nombre";
+      if (id === "apellido-usuario") valorPorDefecto = "Apellido";
+
+      document.getElementById(id).textContent = valor || valorPorDefecto;
+    });
+  }
 });
 
 // Cambiar foto de perfil
 inputImagen.addEventListener("change", (event) => {
   const archivo = event.target.files[0];
   if (!archivo) return;
+
   const lector = new FileReader();
   lector.onload = function (e) {
     const imagenBase64 = e.target.result;
     fotoPerfil.src = imagenBase64;
-    localStorage.setItem("fotoPerfil", imagenBase64);
+
+    // Guardar imagen dentro del objeto JSON existente
+    const datos = JSON.parse(localStorage.getItem("perfilUsuario")) || {};
+    datos.fotoPerfil = imagenBase64;
+    localStorage.setItem("perfilUsuario", JSON.stringify(datos));
   };
   lector.readAsDataURL(archivo);
 });
 
 // Borrar foto
 btnBorrar.addEventListener("click", () => {
-  localStorage.removeItem("fotoPerfil");
+  const datos = JSON.parse(localStorage.getItem("perfilUsuario")) || {};
+  delete datos.fotoPerfil; // eliminar la propiedad del objeto
+  localStorage.setItem("perfilUsuario", JSON.stringify(datos));
+
   fotoPerfil.src = "assets/perfil.jpg";
   inputImagen.value = "";
 });
@@ -74,6 +86,9 @@ btnEditar.addEventListener("click", () => {
     btnEditar.textContent = "Editar perfil";
     opcionesImagen.style.display = "none";
 
+    // Recuperar o crear objeto para guardar todo junto
+    const datos = JSON.parse(localStorage.getItem("perfilUsuario")) || {};
+
     // Guardar los datos y volver a mostrar como texto
     campos.forEach((id) => {
       const input = document.getElementById(id + "-input");
@@ -82,14 +97,15 @@ btnEditar.addEventListener("click", () => {
       //  Verificador: no permitir nombre o apellido vacío
       if (id === "nombre-usuario" && nuevoValor === "") {
         alert("El nombre no puede quedar vacío.");
-        nuevoValor = localStorage.getItem(id) || "Nombre";
+        nuevoValor = datos[id] || "Nombre";
       }
       if (id === "apellido-usuario" && nuevoValor === "") {
         alert("El apellido no puede quedar vacío.");
-        nuevoValor = localStorage.getItem(id) || "Apellido";
+        nuevoValor = datos[id] || "Apellido";
       }
 
-      localStorage.setItem(id, nuevoValor);
+      // Guardar dentro del objeto
+      datos[id] = nuevoValor;
 
       // Crear elemento correcto según el campo
       let nuevoElemento;
@@ -106,5 +122,8 @@ btnEditar.addEventListener("click", () => {
 
       input.replaceWith(nuevoElemento);
     });
+
+    // Guardar todo junto en localStorage como JSON
+    localStorage.setItem("perfilUsuario", JSON.stringify(datos));
   }
 });
