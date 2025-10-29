@@ -5,7 +5,6 @@ function parsePriceText(text) {
   return isNaN(n) ? 0 : n;
 }
 
-
 function formatPrice(num) {
   return `$ ${Number(num).toLocaleString("es-ES")}`;
 }
@@ -40,13 +39,47 @@ function actualizarResumen() {
   if (totalEl) totalEl.textContent = formatPrice(subtotal + shipping);
 }
 
+/* MOSTRAR PRODUCTOS DEL LOCALSTORAGE */
+function mostrarProductosDelLocalStorage() {
+  const container = document.querySelector(".cart-cartas"); // Cambiado
+  if (!container) return;
+
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  if (cart.length === 0) {
+    container.innerHTML = `<p class="empty-msg">No hay ningún producto cargado en el carrito.</p>`;
+    return;
+  }
+
+  container.innerHTML = cart
+    .map(
+      (p) => `
+      <div class="cart-item" data-id="${p.id}">
+        <img src="${p.image}" alt="${p.name}" class="cart-thumb">
+        <div class="item-info">
+          <h3>${p.name}</h3>
+          <p class="precio" data-price="${p.cost}">${p.currency} ${p.cost}</p>
+          <div class="controles-cantidad">
+            <button class="btn btn-sm btn-disminuir">-</button>
+            <span class="cantidad" data-qty="${p.quantity}">${p.quantity}</span>
+            <button class="btn btn-sm btn-aumentar">+</button>
+          </div>
+        </div>
+      </div>`
+    )
+    .join("");
+
+  // Inicializamos los botones **después** de renderizar los productos
+  initQuantityControls();
+}
+
 function initQuantityControls() {
   document.querySelectorAll(".cart-item").forEach((item) => {
     const btnA = item.querySelector(".btn-aumentar");
     const btnD = item.querySelector(".btn-disminuir");
     const qtyEl = item.querySelector(".cantidad");
-
     // Aseguramos dataset inicial si falta
+
     if (qtyEl && !qtyEl.dataset.qty) qtyEl.dataset.qty = parseInt(qtyEl.textContent, 10) || 1;
 
     if (btnA) {
@@ -72,10 +105,10 @@ function initQuantityControls() {
     }
   });
 
-  // Actualiza al inicio
   actualizarResumen();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  mostrarProductosDelLocalStorage(); // Se ejecuta al cargar la página
   initQuantityControls();
 });
