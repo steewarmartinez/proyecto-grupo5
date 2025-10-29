@@ -193,6 +193,10 @@ body.dark-mode .precio {
 
   .tarjeta-resumen {
     position: static;
+    width: 100%;
+  }
+  .cart-thumb {
+    width: 100%;
   }
 }
 
@@ -205,6 +209,10 @@ body.dark-mode .precio {
 
   .controles-cantidad {
     justify-content: center;
+    width: 100%;
+  }
+
+  .cart-thumb {
     width: 100%;
   }
 }
