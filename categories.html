@@ -9,8 +9,12 @@
     <title>eMercado - Todo lo que busques está aquí</title>
 
     <link
-      href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
       rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"
     />
     <link href="css/font-awesome.min.css" rel="stylesheet" />
     <link href="css/bootstrap.min.css" rel="stylesheet" />
@@ -39,15 +43,51 @@
         </div>
 
         <div class="nav-right">
-          <input type="text" class="search-input" placeholder="Buscar..." />
+          <div class="toggle-container">
+            <input type="checkbox" id="modeToggle" class="toggle-input" />
+            <label for="modeToggle" class="toggle-label">
+              <span class="toggle-knob">☀️</span>
+            </label>
+          </div>
           <button class="icon-btn" onclick="goToCart()">
             <i class="fa-solid fa-cart-shopping"></i>
+            <span id="cart-badge" class="cart-badge">0</span>
           </button>
-          <button class="icon-btn"><i class="fa-solid fa-user"></i></button>
+          <div class="dropdown">
+            <button
+              class="btn dropdown-toggle d-flex align-items-center justify-content-center p-0"
+              type="button"
+              id="dropdownMenuButton2"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <i class="fa-solid fa-user icon-btn"></i>
+            </button>
+            <ul
+              class="dropdown-menu dropdown-menu-end custom-dropdown"
+              aria-labelledby="dropdownMenuButton2"
+            >
+              <li><a class="dropdown-item" href="index.html">Inicio</a></li>
+              <li>
+                <a class="dropdown-item" href="my-profile.html">Perfil</a>
+              </li>
+              <li>
+                <a class="dropdown-item" onclick="cerrarSesion()"
+                  >Cerrar sesion</a
+                >
+              </li>
+              <li><hr class="dropdown-divider" /></li>
+              <li>
+                <a class="dropdown-item usuario" id="login-dropdown"
+                  >Nombre de usuario</a
+                >
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </nav>
-    <main class="pb-5">
+    <main class="pb-5 categorias">
       <div class="text-center p-4">
         <h2>Categorías</h2>
         <p class="lead">Verás aquí todas las categorías del sitio.</p>
@@ -108,7 +148,7 @@
                   id="rangeFilterCountMax"
                 />
               </div>
-              <div class="col-3 p-0">
+              <div class="col p-0">
                 <div class="btn-group" role="group">
                   <button class="btn btn-light btn-block" id="rangeFilterCount">
                     Filtrar
@@ -150,5 +190,6 @@
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/init.js"></script>
     <script src="js/categories.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </body>
 </html>

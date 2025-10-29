@@ -1,55 +1,174 @@
+let comentariosActuales = []; // Guardamos los comentarios actuales
 
 document.addEventListener("DOMContentLoaded", async () => {
-  // 1️⃣ Leer el ID del producto desde localStorage
   const productId = localStorage.getItem("selectedProductId");
+  if (!productId) return;
 
-  if (!productId) {
-    document.getElementById("product-container").innerHTML =
-      "<p>No se seleccionó producto.</p>";
-    return;
-  }
-
-  // 2️⃣ Construir la URL del API
+  // Info del producto
   const url = `https://japceibal.github.io/emercado-api/products/${productId}.json`;
+  const commentsUrl = `https://japceibal.github.io/emercado-api/products_comments/${productId}.json`;
 
   try {
-    const response = await fetch(url);
-    if (!response.ok) throw new Error("Error en la petición");
-    const product = await response.json();
+    const [productRes, commentsRes] = await Promise.all([
+      fetch(url),
+      fetch(commentsUrl),
+    ]);
+    const product = await productRes.json();
+    const comentarios = await commentsRes.json();
 
+    comentariosActuales = comentarios; // Guardamos los comentarios
     mostrarProducto(product);
+    mostrarCalificaciones(comentariosActuales);
+    mostrarRelacionados(product.relatedProducts);
+
+    // Listener para el formulario de calificación
+    const form = document.getElementById("form-calificacion");
+    if (form) {
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const comentario = document.getElementById("comentario").value.trim();
+        const puntaje = parseInt(document.getElementById("puntaje").value, 10);
+
+        if (!comentario || isNaN(puntaje) || puntaje < 1 || puntaje > 5) return;
+
+        // Simulamos usuario y fecha
+        const nuevoComentario = {
+          user: localStorage.getItem("usuario") || "Tú",
+          dateTime: new Date().toLocaleString(),
+          description: comentario,
+          score: puntaje,
+        };
+
+        comentariosActuales.push(nuevoComentario);
+        mostrarCalificaciones(comentariosActuales);
+
+        // Limpiar el formulario
+        form.reset();
+      });
+    }
   } catch (error) {
-    console.error("Error al cargar producto:", error);
-    document.getElementById("product-container").innerHTML =
-      "<p>Error al cargar el producto.</p>";
+    console.error(error);
   }
 });
 
-function mostrarProducto(product) {
-  // Crear HTML de las imágenes
-  const imagenesHTML = product.images
+// Mostrar comentarios
+function mostrarCalificaciones(comentarios) {
+  const cont = document.getElementById("calificaciones-list");
+  if (!cont) return;
+  cont.innerHTML = comentarios
     .map(
-      (img) =>
-        `<div class="col-md-3 mb-2"><img src="${img}" class="img-fluid rounded" alt="${product.name}"></div>`
+      (c) => `
+      <div class="calificacion">
+        <div class="calificacion-header">
+          <strong>${c.user}</strong> <span>${c.dateTime}</span>
+        </div>
+        <div class="calificacion-puntaje">${"⭐".repeat(c.score)}</div>
+        <div class="calificacion-comentario">${c.description}</div>
+      </div>
+    `
+    )
+    .join("");
+}
+
+// Mostrar productos relacionados
+function mostrarRelacionados(relacionados) {
+  const cont = document.getElementById("relacionados-list");
+  if (!cont) return;
+  cont.innerHTML = relacionados
+    .map(
+      (p) => `
+      <div class="relacionado-card" data-id="${p.id}" style="cursor:pointer">
+        <img src="${p.image}" alt="${p.name}" class="relacionado-img"/>
+        <div class="relacionado-nombre">${p.name}</div>
+      </div>
+    `
+    )
+    .join("");
+  // Listener para cambiar producto al hacer click
+  cont.querySelectorAll(".relacionado-card").forEach((card) => {
+    card.addEventListener("click", () => {
+      localStorage.setItem("selectedProductId", card.dataset.id);
+      location.reload();
+    });
+  });
+}
+
+// Mostrar producto
+function mostrarProducto(product) {
+  const galeriaDiv = document.getElementById("galeria-imagenes");
+  const descDiv = document.getElementById("descripcion");
+  const miniaturasDiv = document.getElementById("muestra-imagenes");
+
+  // Galería principal
+  galeriaDiv.innerHTML = product.images
+    .map((img) => `<div><img src="${img}" alt="${product.name}"></div>`)
+    .join("");
+
+  // Miniaturas
+  miniaturasDiv.innerHTML = product.images
+    .map(
+      (img, i) =>
+        `<img src="${img}" class="miniatura" data-index="${i}" alt="${product.name}">`
     )
     .join("");
 
-  // HTML principal
-  const html = `
-    <div class="row">
-      <div class="col-md-8">
-        <h2>${product.name}</h2>
-        <p>${product.description}</p>
-        <p><strong>Precio:</strong> ${product.currency} ${product.cost}</p>
-        <p><strong>Categoría:</strong> ${product.category}</p>
-        <p><strong>Vendidos:</strong> ${product.soldCount}</p>
-      </div>
-    </div>
-    <hr>
-    <h4>Imágenes del producto</h4>
-    <div class="row">
-      ${imagenesHTML}
-    </div>
+  // Descripción
+  descDiv.innerHTML = `
+    <h2>${product.name}</h2>
+    <p>${product.description}</p>
+    <p><strong>Precio:</strong> <span class="product-price"> ${product.currency} ${product.cost} </span></p>
+    <p><strong>Categoría:</strong> <span class="product-desc">${product.category} </span></p>
+    <p><strong>Vendidos:</strong> <span class="product-sold"> ${product.soldCount} </span></p>
+    <div class="boton-agregarCarrito">
+              <button class="agregarCarrito">Agregar a carrito</button>
+              <button class="comprarDirecto">Comprar</button>
+            </div>
   `;
 
-  document.getElementById("product-container").innerHTML = html;
+  // Carrusel
+  let index = 0;
+  const slides = galeriaDiv.children;
+  const total = slides.length;
+
+  function showSlide(i) {
+    galeriaDiv.style.transform = `translateX(-${i * 100}%)`;
+    document.querySelectorAll(".miniatura").forEach((m, j) => {
+      m.style.border = j === i ? "2px solid black" : "none";
+    });
+  }
+
+  document.getElementById("prev").onclick = () => {
+    index = (index - 1 + total) % total;
+    showSlide(index);
+  };
+
+  document.getElementById("next").onclick = () => {
+    index = (index + 1) % total;
+    showSlide(index);
+  };
+
+  document.querySelectorAll(".miniatura").forEach((thumb) => {
+    thumb.onclick = () => {
+      index = parseInt(thumb.dataset.index);
+      showSlide(index);
+    };
+  });
+
+  showSlide(index);
+
+  const btnAgregar = document.querySelector(".agregarCarrito");
+  if (btnAgregar) {
+    btnAgregar.addEventListener("click", () => {
+      addToCart(product);
+    });
+    updateCartBadge();
+  }
+
+  const btnComprar = document.querySelector(".comprarDirecto");
+  if (btnComprar) {
+    btnComprar.addEventListener("click", () => {
+      addToCart(product);
+      window.location.href = "cart.html";
+    });
+  }
+}

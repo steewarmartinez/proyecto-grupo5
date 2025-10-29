@@ -1,0 +1,264 @@
+.contenedor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  min-height: 90vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #e0e7ef 100%);
+  padding-bottom: 2rem;
+}
+
+body.dark-mode .contenedor {
+  background: #555555;
+}
+
+body.dark-mode .perfil-contenedor {
+  background-color: black;
+  border-bottom: 4px solid #777;
+}
+
+body.dark-mode .info-contenedor {
+  background-color: black;
+  border-bottom: 4px solid #777;
+}
+
+body.dark-mode .text {
+  color: white;
+}
+
+.perfil-contenedor,
+.info-contenedor {
+  width: 30%;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 18px;
+}
+.perfil-contenedor {
+  margin-top: 6vh;
+  height: 240px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  border-bottom: 4px solid #e0e7ef;
+}
+
+.info-contenedor {
+  min-height: 350px;
+  display: flex;
+  flex-direction: column;
+  padding: 0 3rem 1.5rem 3rem;
+  justify-content: center;
+}
+
+.perfil-contenedor img {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  margin-top: 1rem;
+  border: 4px solid #e0e7ef;
+}
+
+.perfil {
+  width: 50%;
+  height: 100%;
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  cursor: default;
+  align-items: flex-start;
+}
+
+.perfil h2 {
+  font-size: 2.2rem;
+  margin-bottom: 0.3rem;
+  color: #2d3a4a;
+  font-weight: 700;
+}
+
+.perfil h3 {
+  font-size: 1.2rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.info-contenedor h3 {
+  font-size: 1.1rem;
+  margin: 1.1rem 0.5rem 0.7rem 0.5rem;
+  border-bottom: 1px solid #e0e7ef;
+  cursor: default;
+  padding-bottom: 0.3rem;
+  color: #2d3a4a;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.info-contenedor a {
+  text-decoration: none;
+  color: #374151;
+  cursor: default;
+  font-weight: 400;
+}
+
+.imagen-perfil {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.opciones-imagen {
+  display: flex;
+  gap: 0.2rem;
+  margin-top: 0.5rem;
+}
+
+.btn-subir,
+.btn-borrar {
+  background-color: rgb(182, 181, 181);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+}
+
+.btn-subir:hover,
+.btn-borrar:hover {
+  background-color: #555;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.btn-editar {
+  margin-top: 1rem;
+  padding: 0.7rem 1.5rem;
+  background: #222;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.btn-editar:hover {
+  background: #111;
+}
+
+.input-editar {
+  width: 80%;
+  padding: 0.4rem 0.7rem;
+  border: 1.5px solid #b6c2d1;
+  border-radius: 7px;
+  font-size: 1rem;
+  background: #f8fafc;
+  color: #2d3a4a;
+  margin-left: 0.5rem;
+  transition: border 0.2s;
+  outline: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.input-editar:focus {
+  border: 1.5px solid #4f8cff;
+}
+
+select.input-editar {
+  min-width: 110px;
+  max-width: 180px;
+  appearance: none;
+  background: #f8fafc
+    url('data:image/svg+xml;utf8,<svg fill="%234f8cff" height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M7.293 7.293a1 1 0 011.414 0L10 8.586l1.293-1.293a1 1 0 111.414 1.414l-2 2a1 1 0 01-1.414 0l-2-2a1 1 0 010-1.414z"/></svg>')
+    no-repeat right 0.7rem center/1.1em auto;
+  padding-right: 2.2em;
+}
+
+/* Mejorar botones de imagen */
+.btn-subir,
+.btn-borrar {
+  background: #222;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+.btn-subir:hover,
+.btn-borrar:hover {
+  background: #111;
+}
+
+/* Responsive para tablets */
+@media (max-width: 1024px) {
+  .perfil-contenedor,
+  .info-contenedor {
+    width: 60%;
+    padding: 0 2rem;
+  }
+  .info-contenedor {
+    padding: 0 2rem;
+  }
+}
+
+/* Responsive para móviles */
+@media (max-width: 600px) {
+  .perfil-contenedor,
+  .info-contenedor {
+    width: 95%;
+    min-width: unset;
+    max-width: 100%;
+    padding: 0 0.5rem;
+  }
+  .perfil-contenedor {
+    flex-direction: column;
+    height: auto;
+    padding: 1rem 0.5rem;
+    margin-top: 2vh;
+  }
+  .perfil {
+    width: 100%;
+    align-items: center;
+    text-align: center;
+    margin-top: 1rem;
+  }
+  .perfil h2 {
+    font-size: 2rem;
+  }
+  .perfil h3 {
+    font-size: 1.1rem;
+  }
+  .info-contenedor {
+    height: auto;
+    padding: 0 0.5rem;
+  }
+  .info-contenedor h3 {
+    font-size: 1rem;
+    margin: 1rem 0.2rem;
+  }
+  .imagen-perfil img {
+    width: 110px;
+    height: 110px;
+  }
+  .btn-editar {
+    width: 100%;
+    font-size: 0.95rem;
+    padding: 0.5rem 0;
+    margin-top: 1rem;
+    background: #222;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .btn-editar:hover {
+    background: #111;
+  }
+}

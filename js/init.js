@@ -51,9 +51,57 @@ document.addEventListener("DOMContentLoaded", function () {
 
 const usuario = localStorage.getItem("usuario");
 const loginLink = document.getElementById("login-link");
+const loginDropDown = document.getElementById("login-dropdown");
+const correoUsuario = document.getElementById("correo-usuario");
 if (usuario && loginLink) {
   loginLink.textContent = usuario;
   loginLink.href = "#";
+}
+if (usuario && loginDropDown) {
+  loginDropDown.textContent = usuario;
+  loginDropDown.href = "#";
+}
+if (usuario && correoUsuario) {
+  correoUsuario.textContent = usuario;
+  correoUsuario.href = "#";
+}
+
+function cerrarSesion() {
+  const usuario = localStorage.getItem("usuario");
+
+  if (usuario) {
+    localStorage.removeItem("logeado");
+    localStorage.removeItem("usuario");
+
+    if (loginLink) {
+      loginLink.textContent = "Inicia sesión";
+      loginLink.href = "#";
+    }
+    if (loginDropDown) {
+      loginDropDown.textContent = "Inicia sesión";
+      loginDropDown.href = "#";
+    }
+    if (correoUsuario) {
+      correoUsuario.textContent = "";
+      correoUsuario.href = "#";
+    }
+
+    Swal.fire({
+      toast: true,
+      position: "top-end",
+      icon: "success",
+      title: "Sesión cerrada",
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+    });
+  } else {
+    Swal.fire({
+      icon: "info",
+      title: "Inicia sesión primero",
+      showConfirmButton: true,
+    });
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -86,3 +134,39 @@ document.addEventListener("DOMContentLoaded", () => {
 function goToCart() {
   window.location.href = "cart.html";
 }
+
+const toggle = document.getElementById("modeToggle");
+const knob = document.querySelector(".toggle-knob");
+
+// Cargar tema guardado
+if (localStorage.getItem("theme") === "dark") {
+  document.body.classList.add("dark-mode");
+  toggle.checked = true;
+  knob.textContent = "🌙";
+}
+
+toggle.addEventListener("change", () => {
+  if (toggle.checked) {
+    document.body.classList.add("dark-mode");
+    knob.textContent = "🌙";
+    localStorage.setItem("theme", "dark");
+  } else {
+    document.body.classList.remove("dark-mode");
+    knob.textContent = "☀️";
+    localStorage.setItem("theme", "light");
+  }
+});
+
+function updateCartBadge() {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+
+  const badge = document.getElementById("cart-badge");
+  if (badge) {
+    badge.textContent = totalItems;
+    badge.style.display = totalItems > 0 ? "flex" : "none";
+  }
+}
+
+// Llamar al cargar la página
+document.addEventListener("DOMContentLoaded", updateCartBadge);

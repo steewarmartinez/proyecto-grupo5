@@ -1,36 +1,72 @@
-.productos-autos {
+body.dark-mode {
+  background-color: #3b3b3b;
+  color: white;
+}
+
+body.dark-mode .filtros,
+body.dark-mode .product-card {
+  background: black;
+  color: white;
+  transition: 0.7s;
+}
+
+body.dark-mode .product-title {
+  color: white;
+}
+
+body.dark-mode .product-thumb,
+body.dark-mode .product-sold {
+  background: rgb(54, 54, 54);
+}
+
+body.dark-mode .product-desc {
+  color: white;
+}
+
+body.dark-mode .search-input {
+  background-color: black;
+  border: 1px solid #ccc;
+  outline: none;
+  color: white;
+}
+
+body.dark-mode .categorias-productos {
+  color: white;
+}
+
+.filtros-productos {
   display: flex;
   padding: 20px;
   gap: 20px;
 }
 
-.Filto {
+.filtros {
   width: 100%;
   padding: 15px;
-  background: #f5f5f5;
+  background-color: #f5f5f5;
   border-radius: 5px;
 }
 
-.Filto h3 {
+.filtros h3 {
   margin-top: 0;
 }
 
-.Filto div {
+.filtros div {
   margin-bottom: 15px;
 }
 
-.Filto label {
+.filtros label {
   display: block;
   margin-bottom: 5px;
   font-size: 14px;
 }
 
-.Filto input {
+.filtros input {
   width: 100%;
   padding: 5px;
 }
 
-.Filto button {
+.filtros button {
   width: 100%;
   padding: 8px;
   background: #333;
@@ -53,26 +89,29 @@
 
 .product-cards {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /*Saque el 300px y autofill*/
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
 
 /* Tarjetas de producto */
 .product-card {
   background: white;
-  border: 2px solid #e9ecef;
+  border: none;
   border-radius: 10px;
   padding: 15px;
   transition: all 0.3s ease;
   text-decoration: none;
   color: inherit;
   display: block;
+  width: 90%;
+  height: 550px;
 }
 
 .product-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(212, 7, 7, 0.1);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   text-decoration: none;
+  transition: 0.9;
   color: inherit;
 }
 
@@ -83,7 +122,7 @@
 
 .product-thumb {
   width: 100%;
-  height: 180px;
+  height: 280px;
   object-fit: contain;
   border-radius: 8px;
   background: #f8f9fa;
@@ -91,8 +130,12 @@
 }
 
 .product-info {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
   text-align: left;
-  margin-top: 15px;
+  margin-top: 40px;
   margin-left: 15px;
 }
 
@@ -129,12 +172,13 @@
 .btn {
   display: flex;
   justify-content: end;
+  margin-top: auto;
   width: 100%;
   height: 40px;
 }
 
 .addToCart {
-  width: 160px;
+  width: 60%;
   height: 40px;
   z-index: 0;
   float: right;
@@ -177,13 +221,40 @@
   gap: 20px;
 }
 
+@media (min-width: 900px) and (max-width: 1010px) {
+  .filtros-productos {
+    flex-direction: column;
+  }
+
+  .filtros {
+    width: 100%;
+  }
+
+  .product-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .btn {
+    display: flex;
+    justify-content: end;
+    width: 100%;
+    height: 30px;
+  }
+
+  .addToCart {
+    width: 60%;
+    height: 30px;
+    font-size: 10px;
+    padding: 3px 8px;
+  }
+}
+
 @media (min-width: 500px) and (max-width: 768px) {
-  .productos-autos {
+  .filtros-productos {
     flex-direction: column;
     padding: 15px;
   }
 
-  .Filto {
+  .filtros {
     width: 100%;
     margin-bottom: 20px;
   }
@@ -195,19 +266,45 @@
   .product-thumb {
     height: 150px;
   }
+  .btn {
+    display: flex;
+    justify-content: end;
+    width: 100%;
+    height: 30px;
+  }
+
+  .addToCart {
+    width: 60%;
+    height: 30px;
+    font-size: 10px;
+    padding: 3px 8px;
+  }
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
-  .productos-autos {
+  .filtros-productos {
     flex-direction: column;
   }
 
-  .Filto {
+  .filtros {
     width: 100%;
   }
 
   .product-cards {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .btn {
+    display: flex;
+    justify-content: end;
+    width: 100%;
+    height: 30px;
+  }
+
+  .addToCart {
+    width: 60%;
+    height: 30px;
+    font-size: 10px;
+    padding: 3px 8px;
   }
 }
 
@@ -215,12 +312,12 @@
   .product-cards {
     grid-template-columns: repeat(1, 1fr);
   }
-  .productos-autos {
+  .filtros-productos {
     flex-direction: column;
     padding: 15px;
   }
 
-  .Filto {
+  .filtros {
     width: 100%;
     margin-bottom: 20px;
   }
@@ -228,30 +325,43 @@
   .product-thumb {
     height: 150px;
   }
+  .btn {
+    display: flex;
+    justify-content: end;
+    width: 100%;
+    height: 30px;
+  }
+
+  .addToCart {
+    width: 60%;
+    height: 30px;
+    font-size: 10px;
+    padding: 3px 8px;
+  }
 }
 /* Botones de los filtros */
 .Ordenadores {
   margin-top: 20px;
   display: flex;
   flex-direction: column;
-  align-items: center; 
+  align-items: center;
   gap: 10px;
 }
 
 .Ordenadores h4 {
   margin-bottom: 10px;
   font-size: 1rem;
-  text-align: center; 
+  text-align: center;
 }
 
 .Ordenadores .btn {
-   width: 80%;  
+  width: 80%;
   text-align: center;
 }
 .Ordenadores .btn {
-  display: block;        
-  width: 100%;           
-  text-align: center;    
+  display: block;
+  width: 100%;
+  text-align: center;
 }
 
 /* Diseño Barras */
@@ -278,5 +388,5 @@
   background: #343a40;
   cursor: pointer;
   border: 3px solid white;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }

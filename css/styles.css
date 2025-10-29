@@ -9,6 +9,10 @@
   font-weight: bold;
 }
 
+body {
+  font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
 nav a {
   text-decoration: none;
 }
@@ -269,6 +273,27 @@ nav.navbar a.nav-link:hover {
   transition: 0.8s;
 }
 
+.dropdown-toggle {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.custom-dropdown {
+  background-color: #ffffff;
+  color: #000000;
+  border: solid 1px grey;
+}
+
+.custom-dropdown .dropdown-item:hover {
+  background-color: #e0e0e0;
+  color: #000000;
+}
+
+.usuario {
+  cursor: pointer;
+}
+
 #toggle_open {
   display: none;
 }
@@ -476,4 +501,116 @@ nav.navbar a.nav-link:hover {
     color: black;
     transition: 0.8s;
   }
+}
+
+.toggle-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.toggle-input {
+  display: none;
+}
+
+.toggle-label {
+  position: relative;
+  width: 60px;
+  height: 30px;
+  background-color: #ddd;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background-color 0.5s;
+  padding: 3px;
+}
+
+/* La perilla con el ícono adentro */
+.toggle-knob {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.7s ease, background-color 0.7s;
+  font-size: 16px;
+}
+
+/* Modo oscuro */
+.toggle-input:checked + .toggle-label {
+  background-color: #505050;
+}
+
+/* Mover la perilla a la derecha cuando está activado */
+.toggle-input:checked + .toggle-label .toggle-knob {
+  transform: translateX(30px);
+  background-color: #000000;
+  color: #fff;
+}
+
+body.dark-mode {
+  background-color: #3b3b3b;
+  transition: 0.5s;
+}
+
+body.dark-mode .custom-navbar {
+  background-color: black;
+  transition: 0.5s;
+}
+
+body.dark-mode .nav-center {
+  background-color: #333;
+  transition: 0.5s;
+  color: white;
+}
+
+body.dark-mode .nav-center {
+  color: white;
+  transition: 0.5s;
+}
+
+body.dark-mode .active {
+  color: black;
+}
+
+body.dark-mode .icon-btn {
+  color: white;
+  transition: 0.5s;
+}
+
+body.dark-mode .categorias {
+  background-color: #3b3b3b;
+  color: white;
+  transition: 0.5s;
+}
+
+body.dark-mode .list-group-item {
+  background-color: #3b3b3b;
+  color: white;
+}
+
+body.dark-mode .contenedor-ventas {
+  background-color: #3b3b3b;
+  color: white;
+  transition: 0.5s;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: red;
+  color: white;
+  font-size: 0.75rem;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.icon-btn {
+  position: relative; /* importante para posicionar el badge */
 }

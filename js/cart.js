@@ -78,6 +78,7 @@ function initQuantityControls() {
     const btnA = item.querySelector(".btn-aumentar");
     const btnD = item.querySelector(".btn-disminuir");
     const qtyEl = item.querySelector(".cantidad");
+    // Aseguramos dataset inicial si falta
 
     if (qtyEl && !qtyEl.dataset.qty) qtyEl.dataset.qty = parseInt(qtyEl.textContent, 10) || 1;
 
@@ -109,4 +110,5 @@ function initQuantityControls() {
 
 document.addEventListener("DOMContentLoaded", () => {
   mostrarProductosDelLocalStorage(); // Se ejecuta al cargar la página
+  initQuantityControls();
 });

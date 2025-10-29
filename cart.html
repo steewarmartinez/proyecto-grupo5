@@ -6,13 +6,19 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <title>eMercado - Todo lo que busques está aquí</title>
+    <title>eMercado - Carrito de Compras</title>
+
     <link
-      href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
       rel="stylesheet"
     />
-    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"
+    />
     <link href="css/font-awesome.min.css" rel="stylesheet" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/cart.css" />
     <link href="css/styles.css" rel="stylesheet" />
     <link
       rel="stylesheet"
@@ -29,7 +35,7 @@
         </button>
 
         <div class="nav-center" id="menu">
-          <a href="index.html" class="nav-link active">Inicio</a>
+          <a href="index.html" class="nav-link">Inicio</a>
           <a href="categories.html" class="nav-link">Categorías</a>
           <a href="sell.html" class="nav-link">Vender</a>
           <a href="login.html" class="nav-link" id="login-link"
@@ -38,21 +44,119 @@
         </div>
 
         <div class="nav-right">
-          <input type="text" class="search-input" placeholder="Buscar..." />
-          <button class="icon-btn" onclick="goToCart()">
+          <div class="toggle-container">
+            <input type="checkbox" id="modeToggle" class="toggle-input" />
+            <label for="modeToggle" class="toggle-label">
+              <span class="toggle-knob">☀️</span>
+            </label>
+          </div>
+          <button class="icon-btn active" onclick="goToCart()">
             <i class="fa-solid fa-cart-shopping"></i>
           </button>
-          <button class="icon-btn"><i class="fa-solid fa-user"></i></button>
+          <div class="dropdown">
+            <button
+              class="btn dropdown-toggle d-flex align-items-center justify-content-center p-0"
+              type="button"
+              id="dropdownMenuButton2"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <i class="fa-solid fa-user icon-btn"></i>
+            </button>
+            <ul
+              class="dropdown-menu dropdown-menu-end custom-dropdown"
+              aria-labelledby="dropdownMenuButton2"
+            >
+              <li><a class="dropdown-item" href="index.html">Inicio</a></li>
+              <li>
+                <a class="dropdown-item" href="my-profile.html">Perfil</a>
+              </li>
+              <li>
+                <a class="dropdown-item" onclick="cerrarSesion()"
+                  >Cerrar sesion</a
+                >
+              </li>
+              <li><hr class="dropdown-divider" /></li>
+              <li>
+                <a class="dropdown-item usuario" id="login-dropdown"
+                  >Nombre de usuario</a
+                >
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </nav>
+    
     <main>
       <div class="container">
-        <div class="alert alert-danger text-center" role="alert">
-          <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
+        <h1 class="titulo-carrito">
+         Mi Carrito
+        </h1>
+        
+        <!-- Lista de productos en el carrito -->
+        <div class="cart-container">
+          <div class="cart-cartas">
+            
+            <!-- Producto de prueba visual -->
+            <div class="cart-item">
+
+              <div class="item-info">
+                <div class="item-datalles">
+                  <h3>Productos 1</h3>
+                  <p class="nombre-tienda">Cliente</p>
+                  <div class="controles-cantidad">
+                    <button class="btn btn-sm btn-disminuir">-</button>
+                    <span class="cantidad" data-qty="1">1</span>
+                    <button class="btn btn-sm btn-aumentar">+</button>
+                  </div>
+                </div>
+              </div>
+            
+              <div class="precio-item">
+                <!-- precio con data-price -->
+                <span class="precio" data-price="125000">$ 125.000</span>
+                <button class="btn btn-sm btn-eliminar">
+                 Eliminar
+                </button>
+              </div>
+            </div>
+
+          </div>
+          
+          <!-- Resumen del pedido -->
+          <div class="resumen-pedido">
+            <div class="tarjeta-resumen" data-shipping="15000">
+              <h3>Sub Total</h3>
+              <div class="detalles-resumen">
+                <div class="fila-resumen">
+                  <span>Subtotal:</span>
+                  <span id="subtotalValue">$ 125.000</span>
+                </div>
+                <div class="fila-resumen">
+                  <span>Envío:</span>
+                  <span id="shippingValue">$ 15.000</span>
+                </div>
+                <div class="fila-resumen total">
+                  <span>Total:</span>
+                  <span id="totalValue">$ 140.000</span>
+                </div>
+              </div>
+              <button class="btn btn-primary btn-lg w-100 btn-pago">
+               Pagar
+              </button>
+              <div class="seguir-comprando">
+                <a href="categories.html" class="btn btn-outline-secondary w-100 btn-seguir-comprando">
+                   Seguir Comprando
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </main>
+    
+    
     <footer class="text-muted">
       <div class="container">
         <p class="float-end">
@@ -66,6 +170,7 @@
         </p>
       </div>
     </footer>
+    
     <div id="spinner-wrapper">
       <div class="lds-ring">
         <div></div>
@@ -74,8 +179,10 @@
         <div></div>
       </div>
     </div>
+    
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/init.js"></script>
     <script src="js/cart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </body>
 </html>
