@@ -73,9 +73,8 @@ function mostrarProductosDelLocalStorage() {
     .map(
       (p) => `
       <div class="cart-item" data-id="${p.id}">
-        <img src="${p.image || "img/no-image.png"}" alt="${
-        p.name
-      }" class="cart-thumb">
+        <img src="${p.image || 'img/no-image.png'}" alt="${p.name}" class="cart-thumb">
+
         <div class="item-info">
           <div class="item-datalles">
             <h3>${p.name}</h3>
