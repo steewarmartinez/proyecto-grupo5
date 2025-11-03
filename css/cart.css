@@ -167,6 +167,78 @@ body.dark-mode .precio {
   padding: 0.5rem;
 }
 
+/* Entrega 7 */
+.seccion-envio,
+.seccion-direccion,
+.seccion-pago {
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #dee2e6;
+  padding-bottom: 1rem;
+}
+
+.seccion-envio h5,
+.seccion-direccion h5,
+.seccion-pago h5 {
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 0.75rem;
+}
+
+.opciones-envio label,
+.opciones-pago label {
+  display: block;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.direccion-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.direccion-form input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.finalizar-compra {
+  background-color: #28a745;
+  color: white;
+  font-weight: bold;
+}
+
+.finalizar-compra:hover {
+  background-color: #218838;
+}
+
+/* Modo oscuro */
+body.dark-mode .seccion-envio h5,
+body.dark-mode .seccion-direccion h5,
+body.dark-mode .seccion-pago h5 {
+  color: #ffffff;
+}
+
+body.dark-mode .direccion-form input {
+  background-color: #444;
+  color: white;
+  border: 1px solid #666;
+}
+
+
+
+/* Responsive */
+@media (max-width: 576px) {
+  .direccion-form {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
 /* Responsive */
 @media (max-width: 768px) {
   .cart-container {
