@@ -89,98 +89,97 @@
     </nav>
 
     <main>
-  <div class="container">
-    <h1 class="titulo-carrito">Mi Carrito</h1>
+      <div class="container">
+        <h1 class="titulo-carrito">Mi Carrito</h1>
 
-    <!-- Lista de productos en el carrito -->
-    <div class="cart-container">
-      <div class="cart-cartas"></div>
+        <!-- Lista de productos en el carrito -->
+        <div class="cart-container">
+          <div class="cart-cartas"></div>
 
-      <!-- Resumen del pedido -->
-      <div class="resumen-pedido">
-        <div class="tarjeta-resumen" data-shipping="100">
-          <h3>Resumen del Pedido</h3>
+          <!-- Resumen del pedido -->
+          <div class="resumen-pedido">
+            <div class="tarjeta-resumen">
+              <h3>Resumen del Pedido</h3>
 
-          <!-- Tipo de envío -->
-          <div class="seccion-envio">
-            <h5>Tipo de envío</h5>
-            <div class="opciones-envio">
-              <label>
-                <input type="radio" name="envio" value="0.15" checked />
-                Premium (2 a 5 días) — 15%
-              </label>
-              <label>
-                <input type="radio" name="envio" value="0.07" />
-                Express (5 a 8 días) — 7%
-              </label>
-              <label>
-                <input type="radio" name="envio" value="0.05" />
-                Standard (12 a 15 días) — 5%
-              </label>
+              <!-- Tipo de envío -->
+              <div class="seccion-envio">
+                <h5>Tipo de envío</h5>
+                <div class="opciones-envio">
+                  <label>
+                    <input type="radio" name="envio" value="0.15" checked />
+                    Premium (2 a 5 días) — 15%
+                  </label>
+                  <label>
+                    <input type="radio" name="envio" value="0.07" />
+                    Express (5 a 8 días) — 7%
+                  </label>
+                  <label>
+                    <input type="radio" name="envio" value="0.05" />
+                    Standard (12 a 15 días) — 5%
+                  </label>
+                </div>
+              </div>
+
+              <!-- Dirección de envío -->
+              <div class="seccion-direccion">
+                <h5>Dirección de envío</h5>
+                <div class="direccion-form">
+                  <input type="text" placeholder="Departamento" id="departamento" />
+                  <input type="text" placeholder="Localidad" id="localidad" />
+                  <input type="text" placeholder="Calle" id="calle" />
+                  <input type="number" placeholder="Número" id="numero" />
+                  <input type="text" placeholder="Esquina" id="esquina" />
+                </div>
+              </div>
+
+              <!-- Forma de pago -->
+              <div class="seccion-pago">
+                <h5>Forma de pago</h5>
+                <div class="opciones-pago">
+                  <label>
+                    <input type="radio" name="pago" value="tarjeta" checked />
+                    Tarjeta de crédito
+                  </label>
+                  <label>
+                    <input type="radio" name="pago" value="transferencia" />
+                    Transferencia bancaria
+                  </label>
+                </div>
+              </div>
+
+              <!-- Costos -->
+              <div class="detalles-resumen">
+                <div class="fila-resumen">
+                  <span>Subtotal:</span>
+                  <span id="subtotalValue">$ 0</span>
+                </div>
+                <div class="fila-resumen">
+                  <span>Costo de envío:</span>
+                  <span id="shippingValue">$ 0</span>
+                </div>
+                <div class="fila-resumen total">
+                  <span>Total:</span>
+                  <span id="totalValue">$ 0</span>
+                </div>
+              </div>
+
+              <!-- Botones -->
+              <button class="btn btn-success btn-lg w-100 finalizar-compra">
+                Finalizar compra
+              </button>
+
+              <div class="seguir-comprando mt-2">
+                <a
+                  href="categories.html"
+                  class="btn btn-outline-secondary w-100 btn-seguir-comprando">
+                  Seguir Comprando
+                </a>
+              </div>
             </div>
-          </div>
-
-          <!-- Dirección de envío -->
-          <div class="seccion-direccion">
-            <h5>Dirección de envío</h5>
-            <div class="direccion-form">
-              <input type="text" placeholder="Departamento" id="departamento" />
-              <input type="text" placeholder="Localidad" id="localidad" />
-              <input type="text" placeholder="Calle" id="calle" />
-              <input type="number" placeholder="Número" id="numero" />
-              <input type="text" placeholder="Esquina" id="esquina" />
-            </div>
-          </div>
-
-          <!-- Forma de pago -->
-          <div class="seccion-pago">
-            <h5>Forma de pago</h5>
-            <div class="opciones-pago">
-              <label>
-                <input type="radio" name="pago" value="tarjeta" checked />
-                Tarjeta de crédito
-              </label>
-              <label>
-                <input type="radio" name="pago" value="transferencia" />
-                Transferencia bancaria
-              </label>
-            </div>
-          </div>
-
-          <!-- Costos -->
-          <div class="detalles-resumen">
-            <div class="fila-resumen">
-              <span>Subtotal:</span>
-              <span id="subtotalValue">$ 0</span>
-            </div>
-            <div class="fila-resumen">
-              <span>Costo de envío:</span>
-              <span id="shippingValue">$ 0</span>
-            </div>
-            <div class="fila-resumen total">
-              <span>Total:</span>
-              <span id="totalValue">$ 0</span>
-            </div>
-          </div>
-
-          <!-- Botones -->
-          <button class="btn btn-success btn-lg w-100 finalizar-compra">
-            Finalizar compra
-          </button>
-
-          <div class="seguir-comprando mt-2">
-            <a
-              href="categories.html"
-              class="btn btn-outline-secondary w-100 btn-seguir-comprando">
-              Seguir Comprando
-            </a>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</main>
-
+    </main>
 
     <footer class="text-muted">
       <div class="container">

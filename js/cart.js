@@ -11,6 +11,7 @@ function formatPrice(num) {
 
 /**
  * Recalcula subtotal sumando (precio * cantidad) de cada item,
+ * calcula envío basado en el porcentaje seleccionado,
  * actualiza subtotal, envío y total en la sección de resumen.
  */
 function actualizarResumen() {
@@ -32,16 +33,18 @@ function actualizarResumen() {
     subtotal += price * (isNaN(qty) ? 1 : qty);
   });
 
-  const tarjeta = document.querySelector(".tarjeta-resumen");
-  const shipping = tarjeta ? parseInt(tarjeta.dataset.shipping || 0, 10) : 0;
+  // Obtener el porcentaje de envío seleccionado
+  const envioSeleccionado = document.querySelector('input[name="envio"]:checked');
+  const porcentajeEnvio = envioSeleccionado ? parseFloat(envioSeleccionado.value) : 0.15; // Default a 15% si no hay selección
+  const costoEnvio = subtotal * porcentajeEnvio;
 
   const subtotalEl = document.getElementById("subtotalValue");
   const shippingEl = document.getElementById("shippingValue");
   const totalEl = document.getElementById("totalValue");
 
   if (subtotalEl) subtotalEl.textContent = formatPrice(subtotal);
-  if (shippingEl) shippingEl.textContent = formatPrice(shipping);
-  if (totalEl) totalEl.textContent = formatPrice(subtotal + shipping);
+  if (shippingEl) shippingEl.textContent = formatPrice(costoEnvio);
+  if (totalEl) totalEl.textContent = formatPrice(subtotal + costoEnvio);
 }
 
 /* Helpers para localStorage */
@@ -167,6 +170,70 @@ function initQuantityControls() {
   actualizarResumen();
 }
 
+// Función para validar y finalizar compra
+function finalizarCompra() {
+  const cart = loadCart();
+  if (cart.length === 0) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Carrito vacío',
+      text: 'No hay productos en el carrito para finalizar la compra.',
+    });
+    return;
+  }
+
+  // Validar dirección de envío
+  const departamento = document.getElementById('departamento').value.trim();
+  const localidad = document.getElementById('localidad').value.trim();
+  const calle = document.getElementById('calle').value.trim();
+  const numero = document.getElementById('numero').value;
+  const esquina = document.getElementById('esquina').value.trim();
+
+  if (!departamento || !localidad || !calle || !numero || !esquina) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Información incompleta',
+      text: 'Por favor, complete todos los campos de la dirección de envío.',
+    });
+    return;
+  }
+
+  // Validar forma de pago
+  const pagoSeleccionado = document.querySelector('input[name="pago"]:checked');
+  if (!pagoSeleccionado) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Forma de pago no seleccionada',
+      text: 'Por favor, seleccione una forma de pago.',
+    });
+    return;
+  }
+
+  // Si todo está bien, mostrar confirmación
+  const totalEl = document.getElementById('totalValue');
+  const total = totalEl ? totalEl.textContent : '$ 0';
+
+  Swal.fire({
+    icon: 'success',
+    title: 'Compra finalizada',
+    text: `Su compra por ${total} ha sido procesada exitosamente.`,
+    confirmButtonText: 'Aceptar'
+  }).then(() => {
+    // Limpiar carrito y redirigir al inicio para comenzar otra vez las compras
+    localStorage.removeItem('cart');
+    window.location.href = 'index.html';
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   mostrarProductosDelLocalStorage(); // Se ejecuta al cargar la página
+
+  document.querySelectorAll('input[name="envio"]').forEach(radio => {
+    radio.addEventListener('change', actualizarResumen);
+  });
+
+  const btnFinalizar = document.querySelector('.finalizar-compra');
+  if (btnFinalizar) {
+    btnFinalizar.addEventListener('click', finalizarCompra);
+  }
 });
