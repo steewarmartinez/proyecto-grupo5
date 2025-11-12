@@ -34,8 +34,12 @@ function actualizarResumen() {
   });
 
   // Obtener el porcentaje de envío seleccionado
-  const envioSeleccionado = document.querySelector('input[name="envio"]:checked');
-  const porcentajeEnvio = envioSeleccionado ? parseFloat(envioSeleccionado.value) : 0.15; // Default a 15% si no hay selección
+  const envioSeleccionado = document.querySelector(
+    'input[name="envio"]:checked'
+  );
+  const porcentajeEnvio = envioSeleccionado
+    ? parseFloat(envioSeleccionado.value)
+    : 0.15; // Default a 15% si no hay selección
   const costoEnvio = subtotal * porcentajeEnvio;
 
   const subtotalEl = document.getElementById("subtotalValue");
@@ -48,14 +52,14 @@ function actualizarResumen() {
 }
 
 /* Helpers para localStorage */
-function loadCart() {
+function cargarCarrito() {
   try {
     return JSON.parse(localStorage.getItem("cart")) || [];
   } catch {
     return [];
   }
 }
-function saveCart(cart) {
+function guardarCarrito(cart) {
   localStorage.setItem("cart", JSON.stringify(cart));
 }
 
@@ -64,7 +68,7 @@ function mostrarProductosDelLocalStorage() {
   const container = document.querySelector(".cart-cartas"); // Cambiado
   if (!container) return;
 
-  const cart = loadCart();
+  const cart = cargarCarrito();
 
   if (cart.length === 0) {
     container.innerHTML = `<p class="empty-msg">No hay ningún producto cargado en el carrito.</p>`;
@@ -76,12 +80,13 @@ function mostrarProductosDelLocalStorage() {
     .map(
       (p) => `
       <div class="cart-item" data-id="${p.id}">
-        <img src="${p.image || 'img/no-image.png'}" alt="${p.name}" class="cart-thumb">
+        <img src="${p.image || "img/no-image.png"}" alt="${
+        p.name
+      }" class="cart-thumb">
 
         <div class="item-info">
           <div class="item-datalles">
             <h3>${p.name}</h3>
-            <p class="nombre-tienda">Cliente</p>
             
             <div class="controles-cantidad">
               <button class="btn btn-sm btn-disminuir">-</button>
@@ -104,10 +109,10 @@ function mostrarProductosDelLocalStorage() {
     .join("");
 
   // Inicializamos los botones **después** de renderizar los productos
-  initQuantityControls();
+  inicializarControlesDeCantidad();
 }
 
-function initQuantityControls() {
+function inicializarControlesDeCantidad() {
   document.querySelectorAll(".cart-item").forEach((item) => {
     const btnA = item.querySelector(".btn-aumentar");
     const btnD = item.querySelector(".btn-disminuir");
@@ -126,11 +131,11 @@ function initQuantityControls() {
         qtyEl.dataset.qty = q;
         qtyEl.textContent = q;
         // Persistir cambio en localStorage
-        const cart = loadCart();
+        const cart = cargarCarrito();
         const prod = cart.find((x) => String(x.id) === String(id));
         if (prod) {
           prod.quantity = q;
-          saveCart(cart);
+          guardarCarrito(cart);
         }
         actualizarResumen();
       });
@@ -144,11 +149,11 @@ function initQuantityControls() {
         qtyEl.dataset.qty = q;
         qtyEl.textContent = q;
         // Persistir cambio en localStorage
-        const cart = loadCart();
+        const cart = cargarCarrito();
         const prod = cart.find((x) => String(x.id) === String(id));
         if (prod) {
           prod.quantity = q;
-          saveCart(cart);
+          guardarCarrito(cart);
         }
         actualizarResumen();
       });
@@ -157,9 +162,9 @@ function initQuantityControls() {
     if (btnE) {
       btnE.addEventListener("click", () => {
         // Eliminar del DOM y de localStorage
-        let cart = loadCart();
+        let cart = cargarCarrito();
         cart = cart.filter((x) => String(x.id) !== String(id));
-        saveCart(cart);
+        guardarCarrito(cart);
         // Volver a renderizar lista
         mostrarProductosDelLocalStorage();
         actualizarResumen();
@@ -172,28 +177,28 @@ function initQuantityControls() {
 
 // Función para validar y finalizar compra
 function finalizarCompra() {
-  const cart = loadCart();
+  const cart = cargarCarrito();
   if (cart.length === 0) {
     Swal.fire({
-      icon: 'error',
-      title: 'Carrito vacío',
-      text: 'No hay productos en el carrito para finalizar la compra.',
+      icon: "error",
+      title: "Carrito vacío",
+      text: "No hay productos en el carrito para finalizar la compra.",
     });
     return;
   }
 
   // Validar dirección de envío
-  const departamento = document.getElementById('departamento').value.trim();
-  const localidad = document.getElementById('localidad').value.trim();
-  const calle = document.getElementById('calle').value.trim();
-  const numero = document.getElementById('numero').value;
-  const esquina = document.getElementById('esquina').value.trim();
+  const departamento = document.getElementById("departamento").value.trim();
+  const localidad = document.getElementById("localidad").value.trim();
+  const calle = document.getElementById("calle").value.trim();
+  const numero = document.getElementById("numero").value;
+  const esquina = document.getElementById("esquina").value.trim();
 
   if (!departamento || !localidad || !calle || !numero || !esquina) {
     Swal.fire({
-      icon: 'warning',
-      title: 'Información incompleta',
-      text: 'Por favor, complete todos los campos de la dirección de envío.',
+      icon: "warning",
+      title: "Información incompleta",
+      text: "Por favor, complete todos los campos de la dirección de envío.",
     });
     return;
   }
@@ -202,38 +207,38 @@ function finalizarCompra() {
   const pagoSeleccionado = document.querySelector('input[name="pago"]:checked');
   if (!pagoSeleccionado) {
     Swal.fire({
-      icon: 'warning',
-      title: 'Forma de pago no seleccionada',
-      text: 'Por favor, seleccione una forma de pago.',
+      icon: "warning",
+      title: "Forma de pago no seleccionada",
+      text: "Por favor, seleccione una forma de pago.",
     });
     return;
   }
 
   // Si todo está bien, mostrar confirmación
-  const totalEl = document.getElementById('totalValue');
-  const total = totalEl ? totalEl.textContent : '$ 0';
+  const totalEl = document.getElementById("totalValue");
+  const total = totalEl ? totalEl.textContent : "$ 0";
 
   Swal.fire({
-    icon: 'success',
-    title: 'Compra finalizada',
+    icon: "success",
+    title: "Compra finalizada",
     text: `Su compra por ${total} ha sido procesada exitosamente.`,
-    confirmButtonText: 'Aceptar'
+    confirmButtonText: "Aceptar",
   }).then(() => {
     // Limpiar carrito y redirigir al inicio para comenzar otra vez las compras
-    localStorage.removeItem('cart');
-    window.location.href = 'index.html';
+    localStorage.removeItem("cart");
+    window.location.href = "index.html";
   });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   mostrarProductosDelLocalStorage(); // Se ejecuta al cargar la página
 
-  document.querySelectorAll('input[name="envio"]').forEach(radio => {
-    radio.addEventListener('change', actualizarResumen);
+  document.querySelectorAll('input[name="envio"]').forEach((radio) => {
+    radio.addEventListener("change", actualizarResumen);
   });
 
-  const btnFinalizar = document.querySelector('.finalizar-compra');
+  const btnFinalizar = document.querySelector(".finalizar-compra");
   if (btnFinalizar) {
-    btnFinalizar.addEventListener('click', finalizarCompra);
+    btnFinalizar.addEventListener("click", finalizarCompra);
   }
 });

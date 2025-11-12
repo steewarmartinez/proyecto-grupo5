@@ -1,5 +1,6 @@
 const STATE = { raw: [], view: [], catName: "" };
 
+// Crea la estructura HTML para cada producto que se muestra en pantalla
 function InfoProducto(p) {
   return `
     <div class="product-card" data-id="${p.id}">
@@ -14,7 +15,7 @@ function InfoProducto(p) {
         <p class="product-desc">${p.description}</p>
         <div class="product-price">${p.currency ?? "USD"} ${p.cost}</div>
         <div class="btn">
-          <button class="addToCart" data-id="${
+          <button class="agregarCarrito" data-id="${
             p.id
           }">Agregar a carrito</button> 
         </div>
@@ -23,23 +24,25 @@ function InfoProducto(p) {
   `;
 }
 
-function addToCart(product) {
+// Agrega un producto al carrito y lo guarda en localStorage
+function agregarCarrito(product) {
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  // Verificar si el producto ya está en el carrito
+  // Revisa si el producto ya está en el carrito
   const existeProducto = cart.find((item) => item.id === product.id);
 
   if (existeProducto) {
-    // Si ya existe, podrías aumentar una cantidad o simplemente avisar
+    // Si ya está, solo aumenta la cantidad
     existeProducto.quantity += 1;
   } else {
-    // Si no está, lo agregamos
+    // Si no, lo agrega con cantidad 1
     cart.push({ ...product, quantity: 1 });
   }
 
-  // Guardar nuevamente en localStorage
+  // Guarda el carrito actualizado
   localStorage.setItem("cart", JSON.stringify(cart));
 
+  // Muestra una notificación de éxito
   Swal.fire({
     toast: true,
     position: "top-end",
@@ -49,53 +52,54 @@ function addToCart(product) {
     timer: 2000,
     timerProgressBar: true,
   });
-  updateCartBadge();
+  actualizarBadge(); // Actualiza el contador del carrito
 }
 
+// Muestra la lista de productos en pantalla
 function render(list) {
   const box = document.getElementById("productsList");
   if (!box) return;
 
+  // Si no hay productos, muestra un mensaje vacío
   if (!list.length) {
     box.innerHTML = `<div class="no-results">No se encontraron productos con esos filtros.</div>`;
     return;
   }
 
+  // Inserta los productos
   box.innerHTML = list.map(InfoProducto).join("");
 
-  // Escuchar clicks en los botones de carrito
-  document.querySelectorAll(".addToCart").forEach((btn) => {
+  // Escucha el click de los botones “Agregar al carrito”
+  document.querySelectorAll(".agregarCarrito").forEach((btn) => {
     btn.addEventListener("click", (e) => {
-      e.stopPropagation(); // Evita que dispare el click del .product-card
+      e.stopPropagation(); // Evita que el click abra el detalle del producto
       e.preventDefault();
 
       const productId = e.target.dataset.id;
       const product = STATE.raw.find((p) => p.id == productId);
 
-      if (product) addToCart(product);
+      if (product) agregarCarrito(product);
     });
   });
 
-  // Escuchar clicks en los productos para ver info
-  addProductListeners();
+  // Escucha el click sobre la tarjeta del producto (para ver su detalle)
+  guardarId();
 }
 
-// Nueva función: guardar ID al hacer clic
-function addProductListeners() {
+// Guarda el ID del producto en localStorage cuando se hace clic
+function guardarId() {
   const links = document.querySelectorAll(".product-card");
   links.forEach((link) => {
     link.addEventListener("click", () => {
       const productId = link.dataset.id;
       localStorage.setItem("selectedProductId", productId);
-      // Redirigir manualmente al detalle
-      window.location.href = "product-info.html";
+      window.location.href = "product-info.html"; // redirige a la página del producto
     });
   });
 }
 
-// (El resto de tu código queda igual: filtros, ordenamiento, etc.)
-
-function AplicarFiltro() {
+// Aplica los filtros por precio y cantidad vendida
+function aplicarFiltro() {
   const maxPrice = parseFloat(document.getElementById("maxPrice")?.value);
   const minSold = parseInt(document.getElementById("minSold")?.value, 10);
 
@@ -108,7 +112,8 @@ function AplicarFiltro() {
   render(STATE.view);
 }
 
-function BorrarFiltros() {
+// Restaura los filtros a su estado inicial
+function borrarFiltros() {
   const maxPriceInput = document.getElementById("maxPrice");
   const minSoldInput = document.getElementById("minSold");
   if (maxPriceInput) maxPriceInput.value = "";
@@ -117,15 +122,13 @@ function BorrarFiltros() {
   render(STATE.view);
 }
 
-// Luego agregas un listener al botón de borrar filtros
-
+// Cuando carga la página, se ejecuta todo esto
 document.addEventListener("DOMContentLoaded", async () => {
-  // 1. Obtener el ID de la categoría desde localStorage
+  // Obtiene el ID de la categoría desde localStorage
   let catID = localStorage.getItem("catID");
-  // 2. Construir la URL dinámica
   const PRODUCTS_URL = `https://japceibal.github.io/emercado-api/cats_products/${catID}.json`;
 
-  // 3. Hacer la petición
+  // Pide los productos desde la API
   const result = await getJSONData(PRODUCTS_URL);
   if (result.status !== "ok") {
     console.error("Error al cargar productos:", result.data);
@@ -135,7 +138,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  // 4. Guardar en tu STATE
+  // Guarda los datos en el estado general
   const { catName, products } = result.data;
   STATE.catName = catName || "Categoría";
   STATE.raw = products.map((p) => ({
@@ -148,10 +151,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     image: p.image,
   }));
 
-  // (acá después seguís con tu lógica de renderizado)
-
   STATE.view = [...STATE.raw];
 
+  // Captura los elementos del DOM relacionados con filtros
   const maxPriceInput = document.getElementById("maxPrice");
   const minPriceInput = document.getElementById("minPrice");
   const maxPriceSpan = document.getElementById("maxPriceVal");
@@ -159,6 +161,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const minSoldInput = document.getElementById("minSold");
   const minSoldSpan = document.getElementById("minSoldVal");
 
+  // Calcula precios y ventas máximos/mínimos
   const prices = STATE.raw.map((p) => p.cost);
   const maxPrice = Math.max(...prices);
   const minPrice = Math.min(...prices);
@@ -166,7 +169,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const soldCounts = STATE.raw.map((p) => p.soldCount);
   const maxSold = Math.max(...soldCounts);
 
-  // Configurar sliders con valores reales
+  // Configura los sliders con los valores correctos
   if (maxPriceInput) {
     maxPriceInput.max = maxPrice;
     maxPriceInput.value = maxPrice;
@@ -190,7 +193,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (minPriceSpan) minPriceSpan.textContent = minPriceInput.value;
   if (minSoldSpan) minSoldSpan.textContent = minSoldInput.value;
 
-  // Actualizar valores en tiempo real
+  // Actualiza los números en los filtros mientras se mueven los sliders
   maxPriceInput.addEventListener("input", () => {
     maxPriceSpan.textContent = maxPriceInput.value;
   });
@@ -199,21 +202,22 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   if (minSoldInput && minSoldSpan) {
-    minSoldSpan.textContent = minSoldInput.value; // mostrar valor inicial
-
-    // actualizar valor en tiempo real
+    minSoldSpan.textContent = minSoldInput.value;
     minSoldInput.addEventListener("input", () => {
       minSoldSpan.textContent = minSoldInput.value;
     });
   }
 
+  // Cambia el título de la categoría si hace falta
   const h2 = document.querySelector(".products h2, h2");
   if (h2 && h2.textContent.trim().toLowerCase() === "autos")
     h2.textContent = STATE.catName;
 
+  // Muestra los productos
   render(STATE.view);
 
-  const applyBtn = document.getElementById("AplicarFiltro");
+  // Aplica filtros al hacer clic en el botón
+  const applyBtn = document.getElementById("aplicarFiltro");
   applyBtn?.addEventListener("click", () => {
     const maxPriceVal = parseFloat(maxPriceInput?.value);
     const minPriceVal = parseFloat(minPriceInput?.value);
@@ -228,27 +232,25 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     render(STATE.view);
   });
-  /*Aplica los filtros a los productos*/
 
-  /* Ordena del mas barato al mas caro */
+  // Botones para ordenar productos
   document.getElementById("sortPriceAsc").addEventListener("click", () => {
     STATE.view.sort((a, b) => a.cost - b.cost);
     render(STATE.view);
   });
-  /* Ordena del mas caro al mas barato */
+
   document.getElementById("sortPriceDesc").addEventListener("click", () => {
     STATE.view.sort((a, b) => b.cost - a.cost);
     render(STATE.view);
   });
-  /* Ordena del mas vendio al menos vendido */
+
   document.getElementById("sortBySold").addEventListener("click", () => {
     STATE.view.sort((a, b) => b.soldCount - a.soldCount);
     render(STATE.view);
   });
 
-  // Para borrar los filtros
+  // Botón para limpiar todos los filtros
   document.getElementById("deleteFilters")?.addEventListener("click", () => {
-    // Resetear inputs a valores calculados
     if (maxPriceInput) {
       maxPriceInput.value = maxPrice;
       maxPriceSpan.textContent = maxPrice;
@@ -268,6 +270,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     render(STATE.view);
   });
 
+  // Filtro global de búsqueda (por nombre o descripción)
   function filtrarPorBusquedaGlobal() {
     const query =
       document.querySelector(".search-input")?.value.toLowerCase() || "";
@@ -279,7 +282,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     render(STATE.view);
   }
 
-  // Listener para búsqueda en tiempo real en la barra superior
+  // Detecta cuando el usuario escribe en la barra de búsqueda
   document
     .querySelector(".search-input")
     ?.addEventListener("input", filtrarPorBusquedaGlobal);

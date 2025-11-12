@@ -159,15 +159,15 @@ function mostrarProducto(product) {
   const btnAgregar = document.querySelector(".agregarCarrito");
   if (btnAgregar) {
     btnAgregar.addEventListener("click", () => {
-      addToCart(product);
+      agregarCarrito(product);
     });
-    updateCartBadge();
+    actualizarBadge();
   }
 
   const btnComprar = document.querySelector(".comprarDirecto");
   if (btnComprar) {
     btnComprar.addEventListener("click", () => {
-      addToCart(product);
+      agregarCarrito(product);
       window.location.href = "cart.html";
     });
   }
