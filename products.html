@@ -27,8 +27,10 @@
   </head>
 
   <body>
+    <!--Aca esta situada toda la barra de navegación superior-->
     <nav class="custom-navbar">
       <div class="header-container">
+        <!--Opción para el menu hamburguesa en dispositivos con dimensiones pequeñas -->
         <button class="menu-toggle">
           <i class="fa-solid fa-bars" id="toggle_open"></i>
           <i class="fa-solid fa-xmark" id="toggle_close"></i>
@@ -42,7 +44,7 @@
             >Inicia sesión</a
           >
         </div>
-
+        <!--Menu de dropdown para volver al inicio, ingresar el perfil y cerrar sesion -->
         <div class="nav-right">
           <div class="toggle-container">
             <input type="checkbox" id="modeToggle" class="toggle-input" />
@@ -51,7 +53,7 @@
             </label>
           </div>
           <input type="text" class="search-input" placeholder="Buscar..." />
-          <button class="icon-btn" onclick="goToCart()">
+          <button class="icon-btn" onclick="irAlCarrito()">
             <i class="fa-solid fa-cart-shopping"></i>
             <span id="cart-badge" class="cart-badge">0</span>
           </button>
@@ -121,7 +123,7 @@
             <span id="minSoldVal"></span>
             <div class="slider-labels"></div>
           </div>
-          <button id="AplicarFiltro">Aplicar</button>
+          <button id="aplicarFiltro">Aplicar</button>
           <!-- Ordenar -->
           <div class="Ordenadores">
             <button id="sortPriceAsc" class="btn btn-light">Precio ↑</button>
