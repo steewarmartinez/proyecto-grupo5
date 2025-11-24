@@ -39,33 +39,45 @@ signInButton.addEventListener("click", () => {
   container.classList.remove("right-panel-active");
 });
 
-// Función que maneja el inicio de sesión (guarda el usuario y redirige)
 function mantenerLogin(formId) {
   const form = document.getElementById(formId);
-  if (!form) return; // si no existe el formulario, no hace nada
+  if (!form) return;
 
-  // Escucha cuando el usuario envía el formulario
-  form.addEventListener("submit", function (e) {
-    e.preventDefault(); // evita que se recargue la página
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
 
-    // Busca los campos de email y contraseña dentro del formulario
     const usuarioInput = form.querySelector('input[type="email"]');
     const contraseñaInput = form.querySelector('input[type="password"]');
 
-    // Toma los valores y les saca espacios extra
-    const usuario = usuarioInput?.value.trim();
-    const contraseña = contraseñaInput?.value.trim();
+    const email = usuarioInput?.value.trim();
+    const password = contraseñaInput?.value.trim();
 
-    // Si ambos campos tienen algo, guarda los datos y redirige
-    if (usuario && contraseña) {
-      localStorage.setItem("logueado", "true");
-      localStorage.setItem("usuario", usuario);
+    if (!email || !password) {
+      return alert("Por favor, complete todos los campos");
+    }
 
-      // Vuelve al inicio después de iniciar sesión
+    try {
+      const resp = await fetch("http://localhost:3000/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username: email, password }),
+      });
+
+      const data = await resp.json();
+
+      if (!resp.ok) {
+        alert(data.message || "Error al iniciar sesión");
+        return;
+      }
+
+      // GUARDAR TOKEN Y USUARIO
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("usuario", email);
+
       window.location.href = "index.html";
-    } else {
-      // Si falta algo, muestra una alerta simple
-      alert("Por favor, complete todos los campos");
+    } catch (err) {
+      console.error(err);
+      alert("Error de conexión al servidor");
     }
   });
 }
@@ -78,4 +90,3 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Se llaman estas funciones por si existen en otro script
 mantenerLogin();
-cerrarSesion();

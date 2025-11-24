@@ -1,13 +1,13 @@
-const CATEGORIES_URL = "https://japceibal.github.io/emercado-api/cats/cat.json";
-const PUBLISH_PRODUCT_URL =
-  "https://japceibal.github.io/emercado-api/sell/publish.json";
-const PRODUCTS_URL =
-  "https://japceibal.github.io/emercado-api/cats_products/101.json";
-const PRODUCT_INFO_URL = "https://japceibal.github.io/emercado-api/products/";
-const PRODUCT_INFO_COMMENTS_URL =
-  "https://japceibal.github.io/emercado-api/products_comments/";
-const CART_INFO_URL = "https://japceibal.github.io/emercado-api/user_cart/";
-const CART_BUY_URL = "https://japceibal.github.io/emercado-api/cart/buy.json";
+const BASE_URL = "http://localhost:3000/data/";
+
+// Rutas locales (servidas desde el backend)
+const CATEGORIES_URL = BASE_URL + "cats/cat.json";
+const PUBLISH_PRODUCT_URL = BASE_URL + "sell/publish.json";
+const PRODUCTS_URL = BASE_URL + "cats_products/101.json";
+const PRODUCT_INFO_URL = BASE_URL + "products/";
+const PRODUCT_INFO_COMMENTS_URL = BASE_URL + "products_comments/";
+const CART_INFO_URL = BASE_URL + "user_cart/";
+const CART_BUY_URL = BASE_URL + "cart/buy.json";
 const EXT_TYPE = ".json";
 
 // Muestra el spinner cuando se hace una petición
@@ -20,25 +20,37 @@ let hideSpinner = function () {
   document.getElementById("spinner-wrapper").style.display = "none";
 };
 
-// Función genérica para traer datos en formato JSON desde una URL
 let getJSONData = function (url) {
   let result = {};
-  showSpinner(); // se muestra el spinner mientras se carga
-  return fetch(url)
+  showSpinner();
+
+  const token = localStorage.getItem("token");
+
+  return fetch(url, {
+    headers: {
+      "access-token": token || "",
+    },
+  })
     .then((response) => {
       if (response.ok) {
-        return response.json(); // si todo va bien, convierte la respuesta a JSON
+        return response.json();
       } else {
-        throw Error(response.statusText); // si algo falla, lanza error
+        // SI EL TOKEN ES MALO → REDIRIGE
+        if (response.status === 401) {
+          localStorage.removeItem("token");
+          localStorage.removeItem("usuario");
+          window.location.href = "login.html";
+        }
+        throw Error(response.statusText);
       }
     })
-    .then(function (response) {
+    .then((response) => {
       result.status = "ok";
       result.data = response;
       hideSpinner();
       return result;
     })
-    .catch(function (error) {
+    .catch((error) => {
       result.status = "error";
       result.data = error;
       hideSpinner();
@@ -50,6 +62,16 @@ let getJSONData = function (url) {
 document.addEventListener("DOMContentLoaded", function () {
   if (typeof mantenerLogin === "function") {
     mantenerLogin();
+  }
+});
+document.addEventListener("DOMContentLoaded", () => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    // si estás en login.html no redirige
+    if (!window.location.href.includes("login")) {
+      window.location.href = "login.html";
+    }
   }
 });
 
@@ -81,6 +103,7 @@ function cerrarSesion() {
     // Borra los datos de sesión
     localStorage.removeItem("logeado");
     localStorage.removeItem("usuario");
+    localStorage.removeItem("token");
 
     // Actualiza el texto de los enlaces a "Inicia sesión"
     if (loginLink) {
