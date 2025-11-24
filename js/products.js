@@ -126,7 +126,7 @@ function borrarFiltros() {
 document.addEventListener("DOMContentLoaded", async () => {
   // Obtiene el ID de la categoría desde localStorage
   let catID = localStorage.getItem("catID");
-  const PRODUCTS_URL = `https://japceibal.github.io/emercado-api/cats_products/${catID}.json`;
+  const PRODUCTS_URL = `http://localhost:3000/data/cats_products/${catID}.json`;
 
   // Pide los productos desde la API
   const result = await getJSONData(PRODUCTS_URL);
@@ -169,40 +169,34 @@ document.addEventListener("DOMContentLoaded", async () => {
   const soldCounts = STATE.raw.map((p) => p.soldCount);
   const maxSold = Math.max(...soldCounts);
 
-  // Configura los sliders con los valores correctos
-  if (maxPriceInput) {
+  // Configura sliders SOLO si existen
+  if (maxPriceInput && maxPriceSpan) {
     maxPriceInput.max = maxPrice;
     maxPriceInput.value = maxPrice;
     maxPriceSpan.textContent = maxPrice;
+
+    maxPriceInput.addEventListener("input", () => {
+      maxPriceSpan.textContent = maxPriceInput.value;
+    });
   }
 
-  if (minPriceInput) {
+  if (minPriceInput && minPriceSpan) {
     minPriceInput.max = maxPrice;
     minPriceInput.min = 0;
     minPriceInput.value = 0;
     minPriceSpan.textContent = 0;
+
+    minPriceInput.addEventListener("input", () => {
+      minPriceSpan.textContent = minPriceInput.value;
+    });
   }
 
-  if (minSoldInput) {
+  if (minSoldInput && minSoldSpan) {
     minSoldInput.min = 0;
     minSoldInput.max = maxSold;
     minSoldInput.value = 0;
-  }
-
-  if (maxPriceSpan) maxPriceSpan.textContent = maxPriceInput.value;
-  if (minPriceSpan) minPriceSpan.textContent = minPriceInput.value;
-  if (minSoldSpan) minSoldSpan.textContent = minSoldInput.value;
-
-  // Actualiza los números en los filtros mientras se mueven los sliders
-  maxPriceInput.addEventListener("input", () => {
-    maxPriceSpan.textContent = maxPriceInput.value;
-  });
-  minPriceInput.addEventListener("input", () => {
-    minPriceSpan.textContent = minPriceInput.value;
-  });
-
-  if (minSoldInput && minSoldSpan) {
     minSoldSpan.textContent = minSoldInput.value;
+
     minSoldInput.addEventListener("input", () => {
       minSoldSpan.textContent = minSoldInput.value;
     });
@@ -210,44 +204,59 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Cambia el título de la categoría si hace falta
   const h2 = document.querySelector(".products h2, h2");
-  if (h2 && h2.textContent.trim().toLowerCase() === "autos")
+  if (h2 && h2.textContent.trim().toLowerCase() === "autos") {
     h2.textContent = STATE.catName;
+  }
 
   // Muestra los productos
   render(STATE.view);
 
-  // Aplica filtros al hacer clic en el botón
+  // Aplica filtros al hacer clic en el botón (solo si existe el botón)
   const applyBtn = document.getElementById("aplicarFiltro");
-  applyBtn?.addEventListener("click", () => {
-    const maxPriceVal = parseFloat(maxPriceInput?.value);
-    const minPriceVal = parseFloat(minPriceInput?.value);
-    const minSoldVal = parseInt(document.getElementById("minSold")?.value, 10);
+  if (applyBtn) {
+    applyBtn.addEventListener("click", () => {
+      const maxPriceVal = parseFloat(maxPriceInput?.value);
+      const minPriceVal = parseFloat(minPriceInput?.value);
+      const minSoldVal = parseInt(
+        document.getElementById("minSold")?.value,
+        10
+      );
 
-    STATE.view = STATE.raw.filter((p) => {
-      const okMax = isNaN(maxPriceVal) ? true : p.cost <= maxPriceVal;
-      const okMin = isNaN(minPriceVal) ? true : p.cost >= minPriceVal;
-      const okSold = isNaN(minSoldVal) ? true : p.soldCount >= minSoldVal;
-      return okMax && okMin && okSold;
+      STATE.view = STATE.raw.filter((p) => {
+        const okMax = isNaN(maxPriceVal) ? true : p.cost <= maxPriceVal;
+        const okMin = isNaN(minPriceVal) ? true : p.cost >= minPriceVal;
+        const okSold = isNaN(minSoldVal) ? true : p.soldCount >= minSoldVal;
+        return okMax && okMin && okSold;
+      });
+
+      render(STATE.view);
     });
+  }
 
-    render(STATE.view);
-  });
+  // Botones para ordenar productos (solo existen en products.html)
+  const btnAsc = document.getElementById("sortPriceAsc");
+  if (btnAsc) {
+    btnAsc.addEventListener("click", () => {
+      STATE.view.sort((a, b) => a.cost - b.cost);
+      render(STATE.view);
+    });
+  }
 
-  // Botones para ordenar productos
-  document.getElementById("sortPriceAsc").addEventListener("click", () => {
-    STATE.view.sort((a, b) => a.cost - b.cost);
-    render(STATE.view);
-  });
+  const btnDesc = document.getElementById("sortPriceDesc");
+  if (btnDesc) {
+    btnDesc.addEventListener("click", () => {
+      STATE.view.sort((a, b) => b.cost - a.cost);
+      render(STATE.view);
+    });
+  }
 
-  document.getElementById("sortPriceDesc").addEventListener("click", () => {
-    STATE.view.sort((a, b) => b.cost - a.cost);
-    render(STATE.view);
-  });
-
-  document.getElementById("sortBySold").addEventListener("click", () => {
-    STATE.view.sort((a, b) => b.soldCount - a.soldCount);
-    render(STATE.view);
-  });
+  const btnSold = document.getElementById("sortBySold");
+  if (btnSold) {
+    btnSold.addEventListener("click", () => {
+      STATE.view.sort((a, b) => b.soldCount - a.soldCount);
+      render(STATE.view);
+    });
+  }
 
   // Botón para limpiar todos los filtros
   document.getElementById("deleteFilters")?.addEventListener("click", () => {
