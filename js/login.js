@@ -46,11 +46,8 @@ function mantenerLogin(formId) {
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
 
-    const usuarioInput = form.querySelector('input[type="email"]');
-    const contraseñaInput = form.querySelector('input[type="password"]');
-
-    const email = usuarioInput?.value.trim();
-    const password = contraseñaInput?.value.trim();
+    const email = form.querySelector('input[type="email"]')?.value.trim();
+    const password = form.querySelector('input[type="password"]')?.value.trim();
 
     if (!email || !password) {
       return alert("Por favor, complete todos los campos");
@@ -60,7 +57,7 @@ function mantenerLogin(formId) {
       const resp = await fetch("http://localhost:3000/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: email, password }),
+        body: JSON.stringify({ email, password }),
       });
 
       const data = await resp.json();
@@ -70,7 +67,7 @@ function mantenerLogin(formId) {
         return;
       }
 
-      // GUARDAR TOKEN Y USUARIO
+      // --- GUARDAR TOKEN Y USUARIO ---
       localStorage.setItem("token", data.token);
       localStorage.setItem("usuario", email);
 
