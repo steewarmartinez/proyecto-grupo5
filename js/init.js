@@ -35,12 +35,15 @@ let getJSONData = function (url) {
       if (response.ok) {
         return response.json();
       } else {
-        // SI EL TOKEN ES MALO → REDIRIGE
-        if (response.status === 401) {
+        // SOLO redirige si la URL pertenece a /cart
+        const isCart = url.includes("/cart") || url.includes("user_cart");
+
+        if (response.status === 401 && isCart) {
           localStorage.removeItem("token");
           localStorage.removeItem("usuario");
           window.location.href = "login.html";
         }
+
         throw Error(response.statusText);
       }
     })
@@ -65,11 +68,14 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 document.addEventListener("DOMContentLoaded", () => {
-  const token = localStorage.getItem("token");
+  const requiresAuth = ["cart.html", "my-profile.html"];
 
-  if (!token) {
-    // si estás en login.html no redirige
-    if (!window.location.href.includes("login")) {
+  const currentPage = window.location.pathname.split("/").pop();
+
+  if (requiresAuth.includes(currentPage)) {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
       window.location.href = "login.html";
     }
   }
